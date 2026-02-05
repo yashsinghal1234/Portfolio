@@ -1,0 +1,21 @@
+[x] Verify that the copilot-instructions.md file in the .github directory is created.
+
+[x] Clarify Project Requirements
+
+[x] Scaffold the Project
+
+[x] Customize the Project
+
+[x] Install Required Extensions (none required)
+
+[x] Compile the Project (npm run build)
+
+[x] Create and Run Task (not needed for this Vite app)
+
+[x] Launch the Project (npm run dev checked locally)
+
+[x] Ensure Documentation is Complete (README updated; comments removed)
+
+- Work through each checklist item systematically.
+- Keep communication concise and focused.
+- Follow development best practices.
