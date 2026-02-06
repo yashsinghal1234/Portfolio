@@ -18,6 +18,28 @@
   z-index: 2;
 }
 
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-weight: 600;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  margin-left: 24px;
+}
+
+.nav-links a:first-child {
+  margin-left: 0;
+}
+
+@supports (gap: 1rem) {
+  .nav-links a {
+    margin-left: 0;
+  }
+}
+
 .brand {
   font-weight: 700;
   letter-spacing: 0.04em;
