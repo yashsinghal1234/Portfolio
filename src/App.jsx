@@ -430,6 +430,82 @@ function App() {
           </div>
         </div>
       </section>
+
+      <section className="impact-banner" aria-label="Call to action">
+        <div className="impact-content">
+          <div className="impact-mark" aria-hidden="true">
+            <span className="impact-mark-ring" />
+            <span className="impact-mark-text">YS</span>
+          </div>
+          <h2 className="impact-title">
+            <span>From concept to</span>
+            <span className="impact-emphasis">creation</span>
+            <span>let&apos;s make it happen!</span>
+          </h2>
+          <a className="impact-cta" href="#contact">
+            <span>Get in touch</span>
+            <span className="impact-cta-icon" aria-hidden="true">→</span>
+          </a>
+          <p className="impact-sub">I&apos;m available for full-time roles &amp; freelance projects.</p>
+          <p className="impact-note">
+            I thrive on crafting dynamic web applications, and delivering seamless user experiences.
+          </p>
+        </div>
+        <div className="impact-badge" aria-hidden="true">
+          <span>Open to work</span>
+        </div>
+      </section>
+
+      <div className="footer-wrap">
+        <footer className="site-footer">
+          <div className="footer-main">
+            <div className="footer-profile">
+              <div className="footer-mark">YS</div>
+              <p className="footer-description">
+                I&apos;m Yash - a full-stack developer, freelancer &amp; problem solver. Thanks for checking
+                out my site!
+              </p>
+              <span className="footer-status">
+                <span className="footer-dot" aria-hidden="true" />
+                Available for work
+              </span>
+            </div>
+
+            <div className="footer-columns">
+              <div className="footer-col">
+                <p className="footer-heading">General</p>
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+              </div>
+              <div className="footer-col">
+                <p className="footer-heading">Specifics</p>
+                <a href="#projects">Work Experience</a>
+                <a href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+                <a href="#contact">Contact</a>
+                <a href="#about-more">About Me</a>
+              </div>
+              <div className="footer-col">
+                <p className="footer-heading">More</p>
+                <a href="mailto:singhalyash307@gmail.com">Book a call</a>
+                <a href="https://github.com/yashsinghal1234" target="_blank" rel="noreferrer">Links</a>
+                <a href="#privacy">Privacy</a>
+                <a href="#terms">Terms</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="footer-bottom">
+            <p className="footer-copy">© 2026 Yash Singhal. All rights reserved.</p>
+            <div className="footer-legal">
+              <a href="#privacy">Privacy Policy</a>
+              <a href="#terms">Terms of Use</a>
+            </div>
+          </div>
+        </footer>
+        <div className="footer-bar" style={{marginTop: '10px'}} aria-hidden="true" />
+      </div>
     </div>
   )
 }
