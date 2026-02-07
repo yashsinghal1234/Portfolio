@@ -151,10 +151,54 @@ const projects = [
   },
 ]
 
+const experiences = [
+  {
+    id: 'zomato',
+    date: 'Sept 2025 - Nov 2025',
+    role: 'Data Science Intern',
+    company: 'Zomato',
+    summary:
+      'Developed a data-driven routing system to automate slot assignments using an OR-Tools based fleet optimization pipeline.',
+    bullets: [
+      'Built an ensemble learning model to forecast frozen product demand, improving inventory management.',
+      'Integrated the forecasting model with the replenishment system to adjust inventory based on demand.',
+      'Tech stack: Python, Redash, OR-Tools, GoLang, API integration.',
+    ],
+  },
+  {
+    id: 'tech-mahindra',
+    date: 'Dec 2024 - Feb 2025',
+    role: 'Software Developer Intern',
+    company: 'Tech Mahindra',
+    summary:
+      'Built backend systems for multi-agent network automation to speed up issue detection and resolution.',
+    bullets: [
+      'Designed two multi-agent systems for automated ticketing and user communication.',
+      'Developed backend services to detect network issues and verify incident reports.',
+      'Tech stack: PostgreSQL, Prisma, Next.js, JWT, LangGraph, GroqAPI.',
+    ],
+  },
+  {
+    id: 'samsung',
+    date: 'Oct 2023 - Mar 2024',
+    role: 'Machine Learning Intern',
+    company: 'Samsung Innovation Lab',
+    summary:
+      'Developed deep learning architectures for EEG-based stress classification achieving 98.73% accuracy.',
+    bullets: [
+      'Engineered three deep learning models (ResNet18, DenseNet, VGG16) on EEG data.',
+      'Conducted SAM vs MAT dataset analysis for cognitive stress classification.',
+      'Achieved 98.73% accuracy using EfficientNetB0 on MAT dataset.',
+    ],
+  },
+]
+
 function App() {
   const [selectedZone, setSelectedZone] = useState('India')
   const [activeProject, setActiveProject] = useState(projects[0].id)
   const projectRefs = useRef([])
+  const timelineRef = useRef(null)
+  const experienceRef = useRef(null)
 
   const activeLocation =
     locations.find((loc) => loc.name === selectedZone) ?? locations[0]
@@ -176,6 +220,38 @@ function App() {
 
     nodes.forEach((node) => observer.observe(node))
     return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const timelineEl = timelineRef.current
+    const sectionEl = experienceRef.current
+    if (!timelineEl || !sectionEl) return
+
+    let rafId = 0
+
+    const updateProgress = () => {
+      rafId = 0
+      const rect = sectionEl.getBoundingClientRect()
+      const viewHeight = window.innerHeight || 1
+      const total = rect.height + viewHeight
+      const progressed = viewHeight - rect.top
+      const progress = Math.min(Math.max(progressed / total, 0), 1)
+      timelineEl.style.setProperty('--timeline-progress', progress.toFixed(3))
+    }
+
+    const onScroll = () => {
+      if (rafId) return
+      rafId = window.requestAnimationFrame(updateProgress)
+    }
+
+    updateProgress()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
   }, [])
 
   return (
@@ -407,20 +483,49 @@ function App() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="LinkedIn"
+                  data-label="LinkedIn"
                 >
-                  <img src="https://cdn.simpleicons.org/linkedin/FFFFFF" alt="" />
+                  <img className="icon-white" src="/icons/linkedin_2931621.png" alt="" />
+                </a>
+                <a
+                  href="https://leetcode.com/u/yash_singhal123/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="LeetCode"
+                  data-label="LeetCode"
+                >
+                  <img src="https://cdn.simpleicons.org/leetcode/FFFFFF" alt="" />
+                </a>
+                <a
+                  href="https://www.codechef.com/users/yash_308"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="CodeChef"
+                  data-label="CodeChef"
+                >
+                  <img src="https://cdn.simpleicons.org/codechef/FFFFFF" alt="" />
+                </a>
+                <a
+                  href="https://codeforces.com/profile/singhal307"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Codeforces"
+                  data-label="Codeforces"
+                >
+                  <img src="https://cdn.simpleicons.org/codeforces/FFFFFF" alt="" />
                 </a>
                 <a
                   href="https://github.com/yashsinghal1234"
                   target="_blank"
                   rel="noreferrer"
                   aria-label="GitHub"
+                  data-label="GitHub"
                 >
                   <img src="https://cdn.simpleicons.org/github/FFFFFF" alt="" />
                 </a>
               </div>
-              <a className="work-cta" href="#projects">
-                <span>Work Experience</span>
+              <a className="work-cta" href="#experience">
+                <span>Education & Certifications</span>
                 <span className="work-cta-icon" aria-hidden="true">→</span>
               </a>
             </div>
@@ -428,6 +533,35 @@ function App() {
           <div className="about-image">
             <img className="about-photo" src={profileImage} alt="Profile" />
           </div>
+        </div>
+      </section>
+
+      <section className="experience" id="experience" ref={experienceRef}>
+        <h2 className="experience-title">Professional Journey</h2>
+        <div className="timeline" ref={timelineRef}>
+          {experiences.map((experience) => (
+            <article className="timeline-item" key={experience.id}>
+              <div className="timeline-date">
+                <span>{experience.date}</span>
+              </div>
+              <div className="timeline-content">
+                <h3 className="timeline-role">
+                  <span className="timeline-role-accent">{experience.role}</span>
+                  <span> at {experience.company}</span>
+                </h3>
+                <p className="timeline-summary">{experience.summary}</p>
+                <div className="timeline-media" aria-hidden="true">
+                  <div className="timeline-media-card" />
+                  <div className="timeline-media-card" />
+                </div>
+                <ul className="timeline-list">
+                  {experience.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -481,10 +615,10 @@ function App() {
               </div>
               <div className="footer-col">
                 <p className="footer-heading">Specifics</p>
-                <a href="#projects">Work Experience</a>
+                <a href="#experience">Education & Certifications</a>
                 <a href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
                 <a href="#contact">Contact</a>
-                <a href="#about-more">About Me</a>
+                <a href="#experience">Professional Journey</a>
               </div>
               <div className="footer-col">
                 <p className="footer-heading">More</p>
