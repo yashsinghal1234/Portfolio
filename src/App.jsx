@@ -157,8 +157,11 @@ const experiences = [
     date: 'Sept 2025 - Nov 2025',
     role: 'Data Science Intern',
     company: 'Zomato',
+    location: 'Gurugram, India',
+    mode: 'On-site',
     summary:
       'Developed a data-driven routing system to automate slot assignments using an OR-Tools based fleet optimization pipeline.',
+    techStack: ['Python', 'Redash', 'OR-Tools', 'GoLang', 'API Integration'],
     bullets: [
       'Built an ensemble learning model to forecast frozen product demand, improving inventory management.',
       'Integrated the forecasting model with the replenishment system to adjust inventory based on demand.',
@@ -170,8 +173,11 @@ const experiences = [
     date: 'Dec 2024 - Feb 2025',
     role: 'Software Developer Intern',
     company: 'Tech Mahindra',
+    location: 'Noida, India',
+    mode: 'Hybrid',
     summary:
       'Built backend systems for multi-agent network automation to speed up issue detection and resolution.',
+    techStack: ['PostgreSQL', 'Prisma', 'Next.js', 'JWT', 'LangGraph', 'GroqAPI'],
     bullets: [
       'Designed two multi-agent systems for automated ticketing and user communication.',
       'Developed backend services to detect network issues and verify incident reports.',
@@ -183,8 +189,11 @@ const experiences = [
     date: 'Oct 2023 - Mar 2024',
     role: 'Machine Learning Intern',
     company: 'Samsung Innovation Lab',
+    location: 'Bengaluru, India',
+    mode: 'Remote',
     summary:
       'Developed deep learning architectures for EEG-based stress classification achieving 98.73% accuracy.',
+    techStack: ['ResNet18', 'DenseNet', 'VGG16', 'EfficientNetB0', 'Python'],
     bullets: [
       'Engineered three deep learning models (ResNet18, DenseNet, VGG16) on EEG data.',
       'Conducted SAM vs MAT dataset analysis for cognitive stress classification.',
@@ -193,38 +202,235 @@ const experiences = [
   },
 ]
 
-function App() {
-  const [selectedZone, setSelectedZone] = useState('India')
-  const [activeProject, setActiveProject] = useState(projects[0].id)
-  const projectRefs = useRef([])
-  const timelineRef = useRef(null)
-  const experienceRef = useRef(null)
+const searchIconMap = {
+  home: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  ),
+  about: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M12 10v6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <circle cx="12" cy="7" r="1" fill="currentColor" />
+    </svg>
+  ),
+  projects: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 6h16v12H4z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M9 6V4h6v2" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  ),
+  blog: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 4h10l4 4v12H5z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M15 4v4h4" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  ),
+  guestbook: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 5h10a3 3 0 0 1 3 3v11H8a3 3 0 0 0-3 3z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M5 5v14" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  ),
+  bucket: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 7h12l-1 12H7z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M9 7V5h6v2" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  ),
+  call: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 5l4 1 2 4-3 3a12 12 0 0 0 7 7l3-3 4 2 1 4-3 1C9 22 2 15 3 7z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  ),
+  uses: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
+  attribution: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3l6 3v6c0 4-3 7-6 9-3-2-6-5-6-9V6z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  ),
+  links: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9 15l-2 2a3 3 0 1 1-4-4l2-2" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M15 9l2-2a3 3 0 1 1 4 4l-2 2" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M8 12h8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
+  github: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9 19c-3 1-3-2-4-2m8 4v-3c0-1 .4-2 1-2 0 0-4.5-.5-4.5-5a4 4 0 0 1 1-3c0-1 .1-2 1-2a6 6 0 0 1 3 1 6 6 0 0 1 3-1c.9 0 1 1 1 2a4 4 0 0 1 1 3c0 4.5-4.5 5-4.5 5 .6.5 1 1.3 1 2.5V21" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  linkedin: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 9v9M6 6v.2M10 18v-6a3 3 0 0 1 6 0v6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
+  twitter: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M19 7a4 4 0 0 1-2 1 3 3 0 0 0-5 2v1a7 7 0 0 1-6-3s-2 4 3 6a8 8 0 0 1-4 1c5 3 11 0 11-6v-1a4 4 0 0 0 2-1" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  resume: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 4h9l3 3v13H6z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M15 4v3h3" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  ),
+  privacy: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  ),
+  terms: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 4h14v16H5z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M8 8h8M8 12h8M8 16h6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
+}
 
-  const activeLocation =
-    locations.find((loc) => loc.name === selectedZone) ?? locations[0]
-
-  useEffect(() => {
-    const nodes = projectRefs.current.filter(Boolean)
-    if (!nodes.length) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveProject(entry.target.dataset.project)
-          }
-        })
+const searchGroups = [
+  {
+    title: 'Pages',
+    items: [
+      { label: 'Home', href: '/#home', icon: 'home' },
+      { label: 'About', href: '/about', icon: 'about' },
+      { label: 'Projects', href: '/#projects', icon: 'projects' },
+      { label: 'Blog', href: '/#blog', icon: 'blog' },
+      { label: 'Guestbook', href: '/#guestbook', icon: 'guestbook' },
+      { label: 'Bucket List', href: '/#bucket-list', icon: 'bucket' },
+      { label: 'Book a call', href: 'mailto:singhalyash307@gmail.com', icon: 'call' },
+      { label: 'Uses', href: '/#uses', icon: 'uses' },
+      { label: 'Attribution', href: '/#attribution', icon: 'attribution' },
+      { label: 'Links', href: '/#links', icon: 'links' },
+    ],
+  },
+  {
+    title: 'Connect',
+    items: [
+      { label: 'GitHub', href: 'https://github.com/yashsinghal1234', external: true, icon: 'github' },
+      {
+        label: 'LinkedIn',
+        href: 'https://www.linkedin.com/in/yash-singhal-94894b317/',
+        external: true,
+        icon: 'linkedin',
       },
-      { threshold: 0.6 }
-    )
+      { label: 'X (Twitter)', href: 'https://x.com/', external: true, icon: 'twitter' },
+      { label: 'Resume', href: '/resume.pdf', external: true, icon: 'resume' },
+    ],
+  },
+  {
+    title: 'Legal',
+    items: [
+      { label: 'Privacy Policy', href: '/#privacy', icon: 'privacy' },
+      { label: 'Terms of Use', href: '/#terms', icon: 'terms' },
+    ],
+  },
+]
 
-    nodes.forEach((node) => observer.observe(node))
-    return () => observer.disconnect()
-  }, [])
+const getFilteredGroups = (query) => {
+  const normalizedQuery = query.trim().toLowerCase()
+  return searchGroups
+    .map((group) => ({
+      ...group,
+      items: group.items.filter((item) =>
+        !normalizedQuery || item.label.toLowerCase().includes(normalizedQuery)
+      ),
+    }))
+    .filter((group) => group.items.length > 0)
+}
 
+const SearchOverlay = ({
+  isOpen,
+  onClose,
+  searchQuery,
+  onSearchChange,
+  filteredGroups,
+}) => (
+  <div className={`search-overlay ${isOpen ? 'is-open' : ''}`}>
+    <div className="search-backdrop" role="presentation" onClick={onClose} />
+    <div className="search-dialog" role="dialog" aria-modal="true" aria-label="Search">
+      <div className="search-header">
+        <div className="search-input">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" strokeWidth="2" />
+            <path d="M16.5 16.5l4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+          <input
+            type="text"
+            placeholder="Search"
+            aria-label="Search"
+            value={searchQuery}
+            onChange={(event) => onSearchChange(event.target.value)}
+          />
+        </div>
+        <button className="search-close" type="button" onClick={onClose}>
+          ESC
+        </button>
+      </div>
+
+      <div className="search-body">
+        {filteredGroups.length === 0 ? (
+          <p className="search-empty">No matches found.</p>
+        ) : (
+          filteredGroups.map((group) => (
+            <div className="search-group" key={group.title}>
+              <p className="search-heading">{group.title}</p>
+              {group.items.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noreferrer' : undefined}
+                  onClick={onClose}
+                >
+                  <span className="search-icon" aria-hidden="true">
+                    {searchIconMap[item.icon]}
+                  </span>
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  </div>
+)
+
+const NavBar = ({aboutHref, aboutNewTab, onSearchOpen}) => (
+  <header className="nav">
+    <div className="brand">Portfolio</div>
+    <nav className="nav-links" aria-label="Primary">
+      <a href="/#home">Home</a>
+      <a href="/#skills">Skills</a>
+      <a href={aboutHref} target={aboutNewTab ? '_blank' : undefined} rel={aboutNewTab ? 'noreferrer' : undefined}>
+        About
+      </a>
+      <a className="nav-cta" href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <div className="nav-actions">
+      <button className="search-trigger" type="button" aria-label="Open search" onClick={onSearchOpen}>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" strokeWidth="2" />
+          <path d="M16.5 16.5l4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      </button>
+    </div>
+  </header>
+)
+
+const useTimelineGlow = (timelineRef, sectionRef) => {
   useEffect(() => {
     const timelineEl = timelineRef.current
-    const sectionEl = experienceRef.current
+    const sectionEl = sectionRef.current
     if (!timelineEl || !sectionEl) return
 
     let rafId = 0
@@ -252,20 +458,242 @@ function App() {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
     }
+  }, [timelineRef, sectionRef])
+}
+
+const useEscapeClose = (isOpen, onClose) => {
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        onClose()
+      }
+    }
+
+    if (isOpen) {
+      window.addEventListener('keydown', onKeyDown)
+    }
+
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [isOpen, onClose])
+}
+
+const AboutSection = () => (
+  <section className="about-highlight" id="about-more">
+    <p className="chip">KNOW ABOUT ME</p>
+    <div className="about-grid">
+      <div className="about-copy">
+        <h2 className="about-title">
+          Full-Stack Developer and
+          <span className="about-emphasis"> a little bit of everything</span>
+        </h2>
+        <p>
+          I'm Yash Singhal, a proactive full-stack developer passionate about creating dynamic web
+          experiences. From frontend to backend, I thrive on solving complex problems with clean,
+          efficient code. My expertise spans React, Next.js, and Node.js, and I'm always eager to
+          learn more.
+        </p>
+        <p>
+          When I'm not immersed in work, I'm exploring new ideas and staying curious. Life's about
+          balance, and I love embracing every part of it.
+        </p>
+        <p>I believe in waking up each day eager to make a difference!</p>
+        <div className="about-actions">
+          <div className="social-icons" aria-label="Social links">
+            <a
+              href="https://www.linkedin.com/in/yash-singhal-94894b317/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+              data-label="LinkedIn"
+            >
+              <img className="icon-white" src="/icons/linkedin_2931621.png" alt="" />
+            </a>
+            <a
+              href="https://leetcode.com/u/yash_singhal123/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LeetCode"
+              data-label="LeetCode"
+            >
+              <img src="https://cdn.simpleicons.org/leetcode/FFFFFF" alt="" />
+            </a>
+            <a
+              href="https://www.codechef.com/users/yash_308"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="CodeChef"
+              data-label="CodeChef"
+            >
+              <img src="https://cdn.simpleicons.org/codechef/FFFFFF" alt="" />
+            </a>
+            <a
+              href="https://codeforces.com/profile/singhal307"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Codeforces"
+              data-label="Codeforces"
+            >
+              <img src="https://cdn.simpleicons.org/codeforces/FFFFFF" alt="" />
+            </a>
+            <a
+              href="https://github.com/yashsinghal1234"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub"
+              data-label="GitHub"
+            >
+              <img src="https://cdn.simpleicons.org/github/FFFFFF" alt="" />
+            </a>
+          </div>
+          <a className="work-cta" href="#experience">
+            <span>Education & Certifications</span>
+            <span className="work-cta-icon" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+      <div className="about-image">
+        <img className="about-photo" src={profileImage} alt="Profile" />
+      </div>
+    </div>
+  </section>
+)
+
+const ExperienceSection = ({experienceRef, timelineRef, variant = 'default', showGlow = true}) => (
+  <section
+    className={`experience ${variant === 'showcase' ? 'experience-showcase' : ''}`}
+    id="experience"
+    ref={experienceRef}
+  >
+    {variant === 'showcase' ? (
+      <div className="experience-header">
+        <p className="experience-kicker">THE EXPERIENCE</p>
+        <h2 className="experience-heading">
+          Experience That Brings <span>Ideas to Life</span>
+        </h2>
+      </div>
+    ) : (
+      <h2 className="experience-title">Professional Journey</h2>
+    )}
+    <div
+      className={`timeline ${variant === 'showcase' ? 'experience-timeline' : ''} ${showGlow ? '' : 'timeline-no-glow'}`}
+      ref={timelineRef}
+    >
+      {experiences.map((experience) => (
+        <article
+          className={`timeline-item ${variant === 'showcase' ? 'experience-item' : ''}`}
+          key={experience.id}
+        >
+          {variant === 'showcase' ? (
+            <>
+              <div className="experience-meta">
+                <p className="experience-date">{experience.date}</p>
+                <div className="experience-company">
+                  <span className="experience-logo" aria-hidden="true">
+                    {experience.company.slice(0, 1)}
+                  </span>
+                  <span>{experience.company}</span>
+                </div>
+                <p className="experience-meta-row">
+                  <span className="experience-meta-icon location" aria-hidden="true" />
+                  {experience.location}
+                </p>
+                <p className="experience-meta-row">
+                  <span className="experience-meta-icon briefcase" aria-hidden="true" />
+                  {experience.mode}
+                </p>
+              </div>
+              <div className="experience-line" aria-hidden="true" />
+              <div className="experience-content">
+                <h3 className="experience-role">{experience.role}</h3>
+                <p className="experience-summary">{experience.summary}</p>
+                {experience.techStack?.length ? (
+                  <div className="experience-stack" aria-label="Tech stack">
+                    {experience.techStack.map((tech) => (
+                      <span className="experience-pill" key={tech}>{tech}</span>
+                    ))}
+                  </div>
+                ) : null}
+                <ul className="experience-list">
+                  {experience.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="timeline-date">
+                <span>{experience.date}</span>
+              </div>
+              <div className="timeline-content">
+                <h3 className="timeline-role">
+                  <span className="timeline-role-accent">{experience.role}</span>
+                  <span> at {experience.company}</span>
+                </h3>
+                <p className="timeline-summary">{experience.summary}</p>
+                <div className="timeline-media" aria-hidden="true">
+                  <div className="timeline-media-card" />
+                  <div className="timeline-media-card" />
+                </div>
+                <ul className="timeline-list">
+                  {experience.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+)
+
+function App() {
+  const [selectedZone, setSelectedZone] = useState('India')
+  const [activeProject, setActiveProject] = useState(projects[0].id)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const projectRefs = useRef([])
+  const timelineRef = useRef(null)
+  const experienceRef = useRef(null)
+
+  const activeLocation =
+    locations.find((loc) => loc.name === selectedZone) ?? locations[0]
+
+  useEffect(() => {
+    const nodes = projectRefs.current.filter(Boolean)
+    if (!nodes.length) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveProject(entry.target.dataset.project)
+          }
+        })
+      },
+      { threshold: 0.6 }
+    )
+
+    nodes.forEach((node) => observer.observe(node))
+    return () => observer.disconnect()
   }, [])
+  useTimelineGlow(timelineRef, experienceRef)
+  useEscapeClose(isSearchOpen, () => setIsSearchOpen(false))
+
+  const filteredGroups = getFilteredGroups(searchQuery)
 
   return (
     <div className="page">
-      <header className="nav">
-        <div className="brand">Portfolio</div>
-        <nav className="nav-links" aria-label="Primary">
-          <a href="#home">Home</a>
-          <a href="#skills">Skills</a>
-          <a href="#about">About</a>
-          <a className="nav-cta" href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
-          <a href="#contact">Contact</a>
-        </nav>
-      </header>
+      <NavBar aboutHref="/about" aboutNewTab onSearchOpen={() => setIsSearchOpen(true)} />
+      <SearchOverlay
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        filteredGroups={filteredGroups}
+      />
 
       <main className="hero" id="home">
         <p className="eyebrow">Hello, I'm <span className="accent">Yash Singhal</span></p>
@@ -457,113 +885,12 @@ function App() {
         </a>
       </section>
 
-      <section className="about-highlight" id="about-more">
-        <p className="chip">KNOW ABOUT ME</p>
-        <div className="about-grid">
-          <div className="about-copy">
-            <h2 className="about-title">
-              Full-Stack Developer and
-              <span className="about-emphasis"> a little bit of everything</span>
-            </h2>
-            <p>
-              I'm Yash Singhal, a proactive full-stack developer passionate about creating dynamic web
-              experiences. From frontend to backend, I thrive on solving complex problems with clean,
-              efficient code. My expertise spans React, Next.js, and Node.js, and I'm always eager to
-              learn more.
-            </p>
-            <p>
-              When I'm not immersed in work, I'm exploring new ideas and staying curious. Life's about
-              balance, and I love embracing every part of it.
-            </p>
-            <p>I believe in waking up each day eager to make a difference!</p>
-            <div className="about-actions">
-              <div className="social-icons" aria-label="Social links">
-                <a
-                  href="https://www.linkedin.com/in/yash-singhal-94894b317/"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LinkedIn"
-                  data-label="LinkedIn"
-                >
-                  <img className="icon-white" src="/icons/linkedin_2931621.png" alt="" />
-                </a>
-                <a
-                  href="https://leetcode.com/u/yash_singhal123/"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LeetCode"
-                  data-label="LeetCode"
-                >
-                  <img src="https://cdn.simpleicons.org/leetcode/FFFFFF" alt="" />
-                </a>
-                <a
-                  href="https://www.codechef.com/users/yash_308"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="CodeChef"
-                  data-label="CodeChef"
-                >
-                  <img src="https://cdn.simpleicons.org/codechef/FFFFFF" alt="" />
-                </a>
-                <a
-                  href="https://codeforces.com/profile/singhal307"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Codeforces"
-                  data-label="Codeforces"
-                >
-                  <img src="https://cdn.simpleicons.org/codeforces/FFFFFF" alt="" />
-                </a>
-                <a
-                  href="https://github.com/yashsinghal1234"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="GitHub"
-                  data-label="GitHub"
-                >
-                  <img src="https://cdn.simpleicons.org/github/FFFFFF" alt="" />
-                </a>
-              </div>
-              <a className="work-cta" href="#experience">
-                <span>Education & Certifications</span>
-                <span className="work-cta-icon" aria-hidden="true">→</span>
-              </a>
-            </div>
-          </div>
-          <div className="about-image">
-            <img className="about-photo" src={profileImage} alt="Profile" />
-          </div>
-        </div>
-      </section>
-
-      <section className="experience" id="experience" ref={experienceRef}>
-        <h2 className="experience-title">Professional Journey</h2>
-        <div className="timeline" ref={timelineRef}>
-          {experiences.map((experience) => (
-            <article className="timeline-item" key={experience.id}>
-              <div className="timeline-date">
-                <span>{experience.date}</span>
-              </div>
-              <div className="timeline-content">
-                <h3 className="timeline-role">
-                  <span className="timeline-role-accent">{experience.role}</span>
-                  <span> at {experience.company}</span>
-                </h3>
-                <p className="timeline-summary">{experience.summary}</p>
-                <div className="timeline-media" aria-hidden="true">
-                  <div className="timeline-media-card" />
-                  <div className="timeline-media-card" />
-                </div>
-                <ul className="timeline-list">
-                  {experience.bullets.map((bullet) => (
-                    <li key={bullet}>{bullet}</li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+      <AboutSection />
+      <ExperienceSection
+        experienceRef={experienceRef}
+        timelineRef={timelineRef}
+        variant="showcase"
+      />
 
       <section className="impact-banner" aria-label="Call to action">
         <div className="impact-content">
@@ -640,6 +967,33 @@ function App() {
         </footer>
         <div className="footer-bar" style={{marginTop: '10px'}} aria-hidden="true" />
       </div>
+    </div>
+  )
+}
+
+export function AboutPage() {
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const timelineRef = useRef(null)
+  const experienceRef = useRef(null)
+
+  useTimelineGlow(timelineRef, experienceRef)
+  useEscapeClose(isSearchOpen, () => setIsSearchOpen(false))
+
+  const filteredGroups = getFilteredGroups(searchQuery)
+
+  return (
+    <div className="page">
+      <NavBar aboutHref="/about" onSearchOpen={() => setIsSearchOpen(true)} />
+      <SearchOverlay
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        filteredGroups={filteredGroups}
+      />
+      <AboutSection />
+      <ExperienceSection experienceRef={experienceRef} timelineRef={timelineRef} showGlow />
     </div>
   )
 }
