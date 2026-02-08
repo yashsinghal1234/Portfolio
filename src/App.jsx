@@ -321,7 +321,7 @@ const searchGroups = [
         external: true,
         icon: 'linkedin',
       },
-      { label: 'X (Twitter)', href: 'https://x.com/', external: true, icon: 'twitter' },
+      { label: 'X (Twitter)', href: 'https://x.com/singhalyash307', external: true, icon: 'twitter' },
       { label: 'Resume', href: '/resume.pdf', external: true, icon: 'resume' },
     ],
   },
@@ -334,7 +334,7 @@ const searchGroups = [
   },
 ]
 
-const getFilteredGroups = (query) => {
+export const getFilteredGroups = (query) => {
   const normalizedQuery = query.trim().toLowerCase()
   return searchGroups
     .map((group) => ({
@@ -346,7 +346,7 @@ const getFilteredGroups = (query) => {
     .filter((group) => group.items.length > 0)
 }
 
-const SearchOverlay = ({
+export const SearchOverlay = ({
   isOpen,
   onClose,
   searchQuery,
@@ -404,7 +404,7 @@ const SearchOverlay = ({
   </div>
 )
 
-const NavBar = ({aboutHref, aboutNewTab, onSearchOpen}) => (
+export const NavBar = ({aboutHref, aboutNewTab, onSearchOpen}) => (
   <header className="nav">
     <div className="brand">Portfolio</div>
     <nav className="nav-links" aria-label="Primary">
@@ -427,7 +427,7 @@ const NavBar = ({aboutHref, aboutNewTab, onSearchOpen}) => (
   </header>
 )
 
-const useTimelineGlow = (timelineRef, sectionRef) => {
+export const useTimelineGlow = (timelineRef, sectionRef) => {
   useEffect(() => {
     const timelineEl = timelineRef.current
     const sectionEl = sectionRef.current
@@ -461,7 +461,7 @@ const useTimelineGlow = (timelineRef, sectionRef) => {
   }, [timelineRef, sectionRef])
 }
 
-const useEscapeClose = (isOpen, onClose) => {
+export const useEscapeClose = (isOpen, onClose) => {
   useEffect(() => {
     const onKeyDown = (event) => {
       if (event.key === 'Escape') {
@@ -477,7 +477,7 @@ const useEscapeClose = (isOpen, onClose) => {
   }, [isOpen, onClose])
 }
 
-const AboutSection = () => (
+export const AboutSection = () => (
   <section className="about-highlight" id="about-more">
     <p className="chip">KNOW ABOUT ME</p>
     <div className="about-grid">
@@ -507,6 +507,15 @@ const AboutSection = () => (
               data-label="LinkedIn"
             >
               <img className="icon-white" src="/icons/linkedin_2931621.png" alt="" />
+            </a>
+            <a
+              href="https://x.com/singhalyash307"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="X"
+              data-label="X"
+            >
+              <img src="https://cdn.simpleicons.org/x/FFFFFF" alt="" />
             </a>
             <a
               href="https://leetcode.com/u/yash_singhal123/"
@@ -545,7 +554,7 @@ const AboutSection = () => (
               <img src="https://cdn.simpleicons.org/github/FFFFFF" alt="" />
             </a>
           </div>
-          <a className="work-cta" href="#experience">
+          <a className="work-cta" href="/about#education">
             <span>Education & Certifications</span>
             <span className="work-cta-icon" aria-hidden="true">→</span>
           </a>
@@ -558,7 +567,7 @@ const AboutSection = () => (
   </section>
 )
 
-const ExperienceSection = ({experienceRef, timelineRef, variant = 'default', showGlow = true}) => (
+export const ExperienceSection = ({experienceRef, timelineRef, variant = 'default', showGlow = true}) => (
   <section
     className={`experience ${variant === 'showcase' ? 'experience-showcase' : ''}`}
     id="experience"
@@ -650,6 +659,12 @@ const ExperienceSection = ({experienceRef, timelineRef, variant = 'default', sho
 )
 
 function App() {
+  const githubUser = 'yashsinghal1234'
+  const leetcodeUser = 'yash_singhal123'
+  const codechefUser = 'yash_308'
+  const codeforcesUser = 'singhal307'
+  const codolioProfileUrl = 'https://r.jina.ai/http://codolio.com/profile/yashsinghal'
+  const profileUrl = `https://github.com/${githubUser}`
   const [selectedZone, setSelectedZone] = useState('India')
   const [activeProject, setActiveProject] = useState(projects[0].id)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -657,6 +672,15 @@ function App() {
   const projectRefs = useRef([])
   const timelineRef = useRef(null)
   const experienceRef = useRef(null)
+  const [contributionTotal, setContributionTotal] = useState(0)
+  const [weeks, setWeeks] = useState([])
+  const [monthLabels, setMonthLabels] = useState([])
+  const [stats, setStats] = useState({ followers: 0, repos: 0, stars: 0 })
+  const [leetcodeWeeks, setLeetcodeWeeks] = useState([])
+  const [leetcodeMonths, setLeetcodeMonths] = useState([])
+  const [leetcodeStats, setLeetcodeStats] = useState({ solved: 0, rating: 0, rank: 0 })
+  const [codechefStats, setCodechefStats] = useState({ solved: 0, rating: 0, stars: 0 })
+  const [codeforcesStats, setCodeforcesStats] = useState({ rank: 'Unrated', rating: 0 })
 
   const activeLocation =
     locations.find((loc) => loc.name === selectedZone) ?? locations[0]
@@ -682,11 +706,273 @@ function App() {
   useTimelineGlow(timelineRef, experienceRef)
   useEscapeClose(isSearchOpen, () => setIsSearchOpen(false))
 
+  useEffect(() => {
+    let cancelled = false
+    const loadContributions = async () => {
+      try {
+        const response = await fetch(
+          `https://github-contributions-api.jogruber.de/v4/${githubUser}?y=last`
+        )
+        if (!response.ok) return
+        const data = await response.json()
+        if (cancelled || !Array.isArray(data?.contributions)) return
+        const total = data.contributions.reduce(
+          (sum, entry) => sum + (entry.count || 0),
+          0
+        )
+        const sorted = [...data.contributions].sort(
+          (a, b) => new Date(a.date) - new Date(b.date)
+        )
+        setContributionTotal(total)
+
+        const startDate = new Date(sorted[0].date)
+        const endDate = new Date(sorted[sorted.length - 1].date)
+        const start = new Date(startDate)
+        start.setDate(start.getDate() - start.getDay())
+        const end = new Date(endDate)
+        end.setDate(end.getDate() + (6 - end.getDay()))
+
+        const contributionMap = new Map(sorted.map((entry) => [entry.date, entry.count]))
+        const nextWeeks = []
+        const nextMonthLabels = []
+        let cursor = new Date(start)
+        while (cursor <= end) {
+          const week = []
+          const label = cursor.getDate() <= 7
+            ? cursor.toLocaleString('en-US', { month: 'short' })
+            : ''
+          nextMonthLabels.push(label)
+          for (let day = 0; day < 7; day += 1) {
+            const dateKey = cursor.toISOString().slice(0, 10)
+            week.push({ date: dateKey, count: contributionMap.get(dateKey) || 0 })
+            cursor.setDate(cursor.getDate() + 1)
+          }
+          nextWeeks.push(week)
+        }
+        setWeeks(nextWeeks)
+        setMonthLabels(nextMonthLabels)
+      } catch (error) {
+        if (!cancelled) {
+          setContributionTotal(0)
+          setWeeks([])
+          setMonthLabels([])
+        }
+      }
+    }
+
+    loadContributions()
+    return () => {
+      cancelled = true
+    }
+  }, [githubUser])
+
+  useEffect(() => {
+    let cancelled = false
+    const loadStats = async () => {
+      try {
+        const profileResponse = await fetch(`https://api.github.com/users/${githubUser}`)
+        if (!profileResponse.ok) return
+        const profileData = await profileResponse.json()
+
+        let stars = 0
+        let page = 1
+        while (true) {
+          const reposResponse = await fetch(
+            `https://api.github.com/users/${githubUser}/repos?per_page=100&page=${page}`
+          )
+          if (!reposResponse.ok) break
+          const repos = await reposResponse.json()
+          if (!Array.isArray(repos) || repos.length === 0) break
+          repos.forEach((repo) => {
+            stars += repo.stargazers_count || 0
+          })
+          if (repos.length < 100) break
+          page += 1
+        }
+
+        if (!cancelled) {
+          setStats({
+            followers: profileData.followers || 0,
+            repos: profileData.public_repos || 0,
+            stars,
+          })
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setStats({ followers: 0, repos: 0, stars: 0 })
+        }
+      }
+    }
+
+    loadStats()
+    return () => {
+      cancelled = true
+    }
+  }, [githubUser])
+
+  useEffect(() => {
+    let cancelled = false
+    const loadLeetCode = async () => {
+      try {
+        const response = await fetch(`https://leetcode-api-faisalshohag.vercel.app/${leetcodeUser}`)
+        if (!response.ok) return
+        const data = await response.json()
+
+        const totalSolved = Number(data?.totalSolved || 0)
+        const rating = Number(
+          data?.contestRating || data?.contestRating?.rating || data?.rating || 0
+        )
+        const rank = Number(data?.ranking || 0)
+        const calendar = data?.submissionCalendar || {}
+        const contributionMap = new Map()
+        Object.entries(calendar).forEach(([timestamp, count]) => {
+          const dateKey = new Date(Number(timestamp) * 1000).toISOString().slice(0, 10)
+          contributionMap.set(dateKey, (contributionMap.get(dateKey) || 0) + Number(count || 0))
+        })
+
+        const endDate = new Date()
+        const startDate = new Date()
+        startDate.setFullYear(endDate.getFullYear() - 1)
+        const start = new Date(startDate)
+        start.setDate(start.getDate() - start.getDay())
+        const end = new Date(endDate)
+        end.setDate(end.getDate() + (6 - end.getDay()))
+
+        const nextWeeks = []
+        const nextMonthLabels = []
+        let cursor = new Date(start)
+        while (cursor <= end) {
+          const week = []
+          const label = cursor.getDate() <= 7
+            ? cursor.toLocaleString('en-US', { month: 'short' })
+            : ''
+          nextMonthLabels.push(label)
+          for (let day = 0; day < 7; day += 1) {
+            const dateKey = cursor.toISOString().slice(0, 10)
+            week.push({ date: dateKey, count: contributionMap.get(dateKey) || 0 })
+            cursor.setDate(cursor.getDate() + 1)
+          }
+          nextWeeks.push(week)
+        }
+
+        if (!cancelled) {
+          setLeetcodeStats((prev) => ({
+            solved: totalSolved,
+            rating: rating ? Math.round(rating) : prev.rating,
+            rank,
+          }))
+          setLeetcodeWeeks(nextWeeks)
+          setLeetcodeMonths(nextMonthLabels)
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setLeetcodeStats({ solved: 0, rating: 0, rank: 0 })
+          setLeetcodeWeeks([])
+          setLeetcodeMonths([])
+        }
+      }
+    }
+
+    loadLeetCode()
+    return () => {
+      cancelled = true
+    }
+  }, [leetcodeUser])
+
+  useEffect(() => {
+    let cancelled = false
+    const loadCodolioLeetCodeRating = async () => {
+      try {
+        const response = await fetch(codolioProfileUrl)
+        if (!response.ok) return
+        const text = await response.text()
+        const ratingMatch = text.match(/LEETCODE[\s\S]*?###\s*(\d{3,4})/i)
+        const rating = ratingMatch ? Number(ratingMatch[1]) : 0
+        if (!cancelled && rating) {
+          setLeetcodeStats((prev) => ({ ...prev, rating }))
+        }
+      } catch (error) {
+        // Ignore Codolio errors; rating will stay as-is.
+      }
+    }
+
+    loadCodolioLeetCodeRating()
+    return () => {
+      cancelled = true
+    }
+  }, [codolioProfileUrl])
+
+  useEffect(() => {
+    let cancelled = false
+    const loadCodeChef = async () => {
+      try {
+        const response = await fetch(`https://r.jina.ai/http://codechef.com/users/${codechefUser}`)
+        if (!response.ok) return
+        const text = await response.text()
+        const solvedMatch = text.match(/Total Problems Solved:\s*(\d+)/i)
+        const ratingMatch = text.match(/Highest Rating\s*(\d{3,4})/i)
+        const starsMatch = text.match(/Username:\s*([0-9])★/i)
+        const solved = solvedMatch ? Number(solvedMatch[1]) : 0
+        const rating = ratingMatch ? Number(ratingMatch[1]) : 0
+        const stars = starsMatch ? Number(starsMatch[1]) : 0
+        if (!cancelled) {
+          setCodechefStats({ solved, rating, stars })
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setCodechefStats({ solved: 0, rating: 0, stars: 0 })
+        }
+      }
+    }
+
+    loadCodeChef()
+    return () => {
+      cancelled = true
+    }
+  }, [codechefUser])
+
+  useEffect(() => {
+    let cancelled = false
+    const loadCodeforces = async () => {
+      try {
+        const response = await fetch(
+          `https://codeforces.com/api/user.info?handles=${codeforcesUser}`
+        )
+        if (!response.ok) return
+        const data = await response.json()
+        const profile = Array.isArray(data?.result) ? data.result[0] : null
+        if (!cancelled) {
+          setCodeforcesStats({
+            rank: profile?.rank || 'Unrated',
+            rating: Math.round(profile?.rating || 0),
+          })
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setCodeforcesStats({ rank: 'Unrated', rating: 0 })
+        }
+      }
+    }
+
+    loadCodeforces()
+    return () => {
+      cancelled = true
+    }
+  }, [codeforcesUser])
+
+  const getIntensity = (count) => {
+    if (count <= 0) return 'empty'
+    if (count <= 2) return 'low'
+    if (count <= 5) return 'mid'
+    if (count <= 9) return 'high'
+    return 'max'
+  }
+
   const filteredGroups = getFilteredGroups(searchQuery)
 
   return (
     <div className="page">
-      <NavBar aboutHref="/about" aboutNewTab onSearchOpen={() => setIsSearchOpen(true)} />
+      <NavBar aboutHref="/about" onSearchOpen={() => setIsSearchOpen(true)} />
       <SearchOverlay
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
@@ -892,6 +1178,213 @@ function App() {
         variant="showcase"
       />
 
+      <section className="open-source" aria-label="Open source activity">
+        <div className="open-source-header">
+          <p className="open-source-kicker">OPEN SOURCE</p>
+          <h2 className="open-source-title">
+            Code &amp; <span>Contributions</span>
+          </h2>
+        </div>
+
+        <div className="open-source-grid">
+          <article className="open-source-card">
+            <div className="open-source-profile">
+              <div className="open-source-left">
+                <a className="open-source-link" href={profileUrl} target="_blank" rel="noreferrer">
+                  <div className="open-source-avatar" aria-hidden="true">
+                    <img src="https://cdn.simpleicons.org/github/FFFFFF" alt="" />
+                  </div>
+                </a>
+                <div className="open-source-meta">
+                  <a className="open-source-link" href={profileUrl} target="_blank" rel="noreferrer">
+                    <p className="open-source-handle">@{githubUser}</p>
+                  </a>
+                  <p className="open-source-subtitle">Contribution Graph</p>
+                </div>
+              </div>
+              <div className="open-source-total">
+                <p className="open-source-total-number">{contributionTotal || 0}</p>
+                <span className="open-source-total-label">LAST 12 MONTHS</span>
+              </div>
+            </div>
+
+            <div className="open-source-graph">
+              <div
+                className="open-source-months"
+                style={{ '--week-count': weeks.length || 52 }}
+              >
+                {(monthLabels.length ? monthLabels : Array.from({ length: 52 }, () => '')).map(
+                  (month, index) => (
+                    <span key={`${month}-${index}`}>{month}</span>
+                  )
+                )}
+              </div>
+              <div
+                className="open-source-cells"
+                style={{ '--week-count': weeks.length || 52 }}
+                aria-hidden="true"
+              >
+                {weeks.length
+                  ? weeks.flatMap((week) =>
+                      week.map((entry) => (
+                        <span
+                          key={entry.date}
+                          className={`contribution-cell ${getIntensity(entry.count)}`}
+                          title={`${entry.count} contributions on ${entry.date}`}
+                        />
+                      ))
+                    )
+                  : Array.from({ length: 52 * 7 }, (_, index) => (
+                      <span key={index} className="contribution-cell empty" />
+                    ))}
+              </div>
+              <div className="open-source-footer">
+                <span>{contributionTotal} contributions in the last year</span>
+                <div className="open-source-legend">
+                  <span>Less</span>
+                  <div className="legend-scale">
+                    <span className="contribution-cell empty" />
+                    <span className="contribution-cell low" />
+                    <span className="contribution-cell mid" />
+                    <span className="contribution-cell high" />
+                    <span className="contribution-cell max" />
+                  </div>
+                  <span>More</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <div className="open-source-stats">
+            <div className="stat-card">
+              <p className="stat-label">Followers</p>
+              <p className="stat-value accent-pink">{stats.followers}</p>
+            </div>
+            <div className="stat-card">
+              <p className="stat-label">Repos</p>
+              <p className="stat-value accent-teal">{stats.repos}</p>
+            </div>
+            <div className="stat-card">
+              <p className="stat-label">GitHub Stars</p>
+              <p className="stat-value accent-gold">{stats.stars}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="open-source dsa-section" aria-label="DSA practice">
+        <div className="open-source-header">
+          <p className="open-source-kicker">DSA</p>
+          <h2 className="open-source-title">
+            Problem <span>Solving</span>
+          </h2>
+        </div>
+
+        <div className="open-source-grid">
+          <article className="open-source-card">
+            <div className="open-source-profile">
+              <div className="open-source-left">
+                <a
+                  className="open-source-link"
+                  href="https://leetcode.com/u/yash_singhal123/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <div className="open-source-avatar" aria-hidden="true">
+                    <img src="https://cdn.simpleicons.org/leetcode/FFFFFF" alt="" />
+                  </div>
+                </a>
+                <div className="open-source-meta">
+                  <a
+                    className="open-source-link"
+                    href="https://leetcode.com/u/yash_singhal123/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <p className="open-source-handle">LeetCode Activity</p>
+                  </a>
+                  <p className="open-source-subtitle">Daily problem solving streak</p>
+                </div>
+              </div>
+              <div className="open-source-total">
+                <p className="open-source-total-number">{leetcodeStats.solved}</p>
+                <span className="open-source-total-label">QUESTIONS SOLVED</span>
+              </div>
+            </div>
+
+            <div className="open-source-graph">
+              <div
+                className="open-source-months"
+                style={{ '--week-count': leetcodeWeeks.length || 52 }}
+              >
+                {(leetcodeMonths.length
+                  ? leetcodeMonths
+                  : Array.from({ length: 52 }, () => '')
+                ).map((month, index) => (
+                  <span key={`${month}-${index}`}>{month}</span>
+                ))}
+              </div>
+              <div
+                className="open-source-cells"
+                style={{ '--week-count': leetcodeWeeks.length || 52 }}
+                aria-hidden="true"
+              >
+                {leetcodeWeeks.length
+                  ? leetcodeWeeks.flatMap((week) =>
+                      week.map((entry) => (
+                        <span
+                          key={entry.date}
+                          className={`contribution-cell ${getIntensity(entry.count)}`}
+                          title={`${entry.count} submissions on ${entry.date}`}
+                        />
+                      ))
+                    )
+                  : Array.from({ length: 52 * 7 }, (_, index) => (
+                      <span key={index} className="contribution-cell empty" />
+                    ))}
+              </div>
+              <div className="open-source-footer">
+                <span>LeetCode submissions in the last year</span>
+                <div className="open-source-legend">
+                  <span>Less</span>
+                  <div className="legend-scale">
+                    <span className="contribution-cell empty" />
+                    <span className="contribution-cell low" />
+                    <span className="contribution-cell mid" />
+                    <span className="contribution-cell high" />
+                    <span className="contribution-cell max" />
+                  </div>
+                  <span>More</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <div className="open-source-stats">
+            <div className="stat-card">
+              <p className="stat-label">LeetCode</p>
+              <p className="stat-value accent-pink">{leetcodeStats.solved}</p>
+              <p className="stat-note">
+                Rating {leetcodeStats.rating || 'N/A'}
+                {leetcodeStats.rank ? ` · Rank ${leetcodeStats.rank}` : ''}
+              </p>
+            </div>
+            <div className="stat-card">
+              <p className="stat-label">CodeChef</p>
+              <p className="stat-value accent-teal">{codechefStats.solved}</p>
+              <p className="stat-note">
+                Rating {codechefStats.rating || 'N/A'}
+                {codechefStats.stars ? ` · ${'★'.repeat(codechefStats.stars)}` : ''}
+              </p>
+            </div>
+            <div className="stat-card">
+              <p className="stat-label">Codeforces</p>
+              <p className="stat-value accent-gold">{codeforcesStats.rank}</p>
+              <p className="stat-note">Rating {codeforcesStats.rating || 'N/A'}</p>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="impact-banner" aria-label="Call to action">
         <div className="impact-content">
           <div className="impact-mark" aria-hidden="true">
@@ -951,6 +1444,7 @@ function App() {
                 <p className="footer-heading">More</p>
                 <a href="mailto:singhalyash307@gmail.com">Book a call</a>
                 <a href="https://github.com/yashsinghal1234" target="_blank" rel="noreferrer">Links</a>
+                <a href="https://x.com/singhalyash307" target="_blank" rel="noreferrer">X (Twitter)</a>
                 <a href="#privacy">Privacy</a>
                 <a href="#terms">Terms</a>
               </div>
@@ -967,33 +1461,6 @@ function App() {
         </footer>
         <div className="footer-bar" style={{marginTop: '10px'}} aria-hidden="true" />
       </div>
-    </div>
-  )
-}
-
-export function AboutPage() {
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
-  const timelineRef = useRef(null)
-  const experienceRef = useRef(null)
-
-  useTimelineGlow(timelineRef, experienceRef)
-  useEscapeClose(isSearchOpen, () => setIsSearchOpen(false))
-
-  const filteredGroups = getFilteredGroups(searchQuery)
-
-  return (
-    <div className="page">
-      <NavBar aboutHref="/about" onSearchOpen={() => setIsSearchOpen(true)} />
-      <SearchOverlay
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        filteredGroups={filteredGroups}
-      />
-      <AboutSection />
-      <ExperienceSection experienceRef={experienceRef} timelineRef={timelineRef} showGlow />
     </div>
   )
 }
