@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import { World } from './WorldGlobe'
 import profileImage from './assets/seedream-4-high-res-fal_Create_a_realistic_b.jpeg'
+import gcpGenaiCert from './assets/certificates/Certificate _ Virtual Internship _ Skill Wallet.pdf'
+import aicteFrontendCert from './assets/certificates/AICTE B3_PL_4001-6099-2030.pdf'
 
 const skills = [
   { iconUrl: 'https://cdn.simpleicons.org/html5/E34F26', label: 'HTML' },
@@ -153,52 +155,49 @@ const projects = [
 
 const experiences = [
   {
-    id: 'zomato',
-    date: 'Sept 2025 - Nov 2025',
-    role: 'Data Science Intern',
-    company: 'Zomato',
-    location: 'Gurugram, India',
-    mode: 'On-site',
-    summary:
-      'Developed a data-driven routing system to automate slot assignments using an OR-Tools based fleet optimization pipeline.',
-    techStack: ['Python', 'Redash', 'OR-Tools', 'GoLang', 'API Integration'],
+    id: 'gcp-genai',
+    date: 'Nov 2025 - Jan 2026',
+    role: 'Virtual Intern',
+    company: 'Google Cloud Generative AI',
+    location: 'Remote',
+    mode: 'Virtual Internship',
+    summary: (
+      <>
+        Completed a virtual internship focused on{' '}
+        <span className="experience-highlight">Google Cloud Generative AI</span> with{' '}
+        <span className="experience-highlight">hands-on learning</span> and practical application.
+      </>
+    ),
+    techStack: ['Google Cloud', 'Generative AI'],
     bullets: [
-      'Built an ensemble learning model to forecast frozen product demand, improving inventory management.',
-      'Integrated the forecasting model with the replenishment system to adjust inventory based on demand.',
-      'Tech stack: Python, Redash, OR-Tools, GoLang, API integration.',
+      'Completed the program run by SmartBridge & SmartInternz with applied GenAI learning.',
+      'Demonstrated practical understanding of core GenAI concepts and cloud services.',
+      'Issued completion certificate on Jan 20, 2026 (ID: VIP-AI-2026-30791).',
     ],
+    certLink: gcpGenaiCert,
   },
   {
-    id: 'tech-mahindra',
-    date: 'Dec 2024 - Feb 2025',
-    role: 'Software Developer Intern',
-    company: 'Tech Mahindra',
-    location: 'Noida, India',
-    mode: 'Hybrid',
-    summary:
-      'Built backend systems for multi-agent network automation to speed up issue detection and resolution.',
-    techStack: ['PostgreSQL', 'Prisma', 'Next.js', 'JWT', 'LangGraph', 'GroqAPI'],
+    id: 'aicte-frontend',
+    date: 'Aug 2025 - Sept 2025',
+    role: 'Front End Web Development Intern',
+    company: 'AICTE · Edunet Foundation · IBM SkillsBuild',
+    location: 'Remote',
+    mode: '6-week Internship',
+    summary: (
+      <>
+        Completed a{' '}
+        <span className="experience-highlight">front-end web development</span> internship
+        with <span className="experience-highlight">AICTE</span>, implemented by Edunet
+        Foundation and supported by IBM SkillsBuild.
+      </>
+    ),
+    techStack: ['HTML', 'CSS', 'JavaScript', 'IBM SkillsBuild'],
     bullets: [
-      'Designed two multi-agent systems for automated ticketing and user communication.',
-      'Developed backend services to detect network issues and verify incident reports.',
-      'Tech stack: PostgreSQL, Prisma, Next.js, JWT, LangGraph, GroqAPI.',
+      'Delivered assignments across core front-end concepts and responsive UI practices.',
+      'Recognized for active participation and engagement during the training.',
+      'Student ID: STU6784f41587da21736766485 (certificate: AICTE B3_PL_4001-6099-2030).',
     ],
-  },
-  {
-    id: 'samsung',
-    date: 'Oct 2023 - Mar 2024',
-    role: 'Machine Learning Intern',
-    company: 'Samsung Innovation Lab',
-    location: 'Bengaluru, India',
-    mode: 'Remote',
-    summary:
-      'Developed deep learning architectures for EEG-based stress classification achieving 98.73% accuracy.',
-    techStack: ['ResNet18', 'DenseNet', 'VGG16', 'EfficientNetB0', 'Python'],
-    bullets: [
-      'Engineered three deep learning models (ResNet18, DenseNet, VGG16) on EEG data.',
-      'Conducted SAM vs MAT dataset analysis for cognitive stress classification.',
-      'Achieved 98.73% accuracy using EfficientNetB0 on MAT dataset.',
-    ],
+    certLink: aicteFrontendCert,
   },
 ]
 
@@ -404,7 +403,7 @@ export const SearchOverlay = ({
   </div>
 )
 
-export const NavBar = ({aboutHref, aboutNewTab, onSearchOpen}) => (
+export const NavBar = ({ aboutHref, aboutNewTab, onSearchOpen }) => (
   <header className="nav">
     <div className="brand">Portfolio</div>
     <nav className="nav-links" aria-label="Primary">
@@ -567,7 +566,7 @@ export const AboutSection = () => (
   </section>
 )
 
-export const ExperienceSection = ({experienceRef, timelineRef, variant = 'default', showGlow = true}) => (
+export const ExperienceSection = ({ experienceRef, timelineRef, variant = 'default', showGlow = true }) => (
   <section
     className={`experience ${variant === 'showcase' ? 'experience-showcase' : ''}`}
     id="experience"
@@ -627,6 +626,16 @@ export const ExperienceSection = ({experienceRef, timelineRef, variant = 'defaul
                     <li key={bullet}>{bullet}</li>
                   ))}
                 </ul>
+                {experience.certLink ? (
+                  <a
+                    className="experience-cert"
+                    href={experience.certLink}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View certificate →
+                  </a>
+                ) : null}
               </div>
             </>
           ) : (
@@ -640,10 +649,16 @@ export const ExperienceSection = ({experienceRef, timelineRef, variant = 'defaul
                   <span> at {experience.company}</span>
                 </h3>
                 <p className="timeline-summary">{experience.summary}</p>
-                <div className="timeline-media" aria-hidden="true">
-                  <div className="timeline-media-card" />
-                  <div className="timeline-media-card" />
-                </div>
+                {experience.certLink ? (
+                  <a
+                    className="timeline-cert-link"
+                    href={experience.certLink}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View certificate →
+                  </a>
+                ) : null}
                 <ul className="timeline-list">
                   {experience.bullets.map((bullet) => (
                     <li key={bullet}>{bullet}</li>
@@ -1226,17 +1241,17 @@ function App() {
               >
                 {weeks.length
                   ? weeks.flatMap((week) =>
-                      week.map((entry) => (
-                        <span
-                          key={entry.date}
-                          className={`contribution-cell ${getIntensity(entry.count)}`}
-                          title={`${entry.count} contributions on ${entry.date}`}
-                        />
-                      ))
-                    )
+                    week.map((entry) => (
+                      <span
+                        key={entry.date}
+                        className={`contribution-cell ${getIntensity(entry.count)}`}
+                        title={`${entry.count} contributions on ${entry.date}`}
+                      />
+                    ))
+                  )
                   : Array.from({ length: 52 * 7 }, (_, index) => (
-                      <span key={index} className="contribution-cell empty" />
-                    ))}
+                    <span key={index} className="contribution-cell empty" />
+                  ))}
               </div>
               <div className="open-source-footer">
                 <span>{contributionTotal} contributions in the last year</span>
@@ -1331,17 +1346,17 @@ function App() {
               >
                 {leetcodeWeeks.length
                   ? leetcodeWeeks.flatMap((week) =>
-                      week.map((entry) => (
-                        <span
-                          key={entry.date}
-                          className={`contribution-cell ${getIntensity(entry.count)}`}
-                          title={`${entry.count} submissions on ${entry.date}`}
-                        />
-                      ))
-                    )
+                    week.map((entry) => (
+                      <span
+                        key={entry.date}
+                        className={`contribution-cell ${getIntensity(entry.count)}`}
+                        title={`${entry.count} submissions on ${entry.date}`}
+                      />
+                    ))
+                  )
                   : Array.from({ length: 52 * 7 }, (_, index) => (
-                      <span key={index} className="contribution-cell empty" />
-                    ))}
+                    <span key={index} className="contribution-cell empty" />
+                  ))}
               </div>
               <div className="open-source-footer">
                 <span>LeetCode submissions in the last year</span>
@@ -1459,7 +1474,7 @@ function App() {
             </div>
           </div>
         </footer>
-        <div className="footer-bar" style={{marginTop: '10px'}} aria-hidden="true" />
+        <div className="footer-bar" style={{ marginTop: '10px' }} aria-hidden="true" />
       </div>
     </div>
   )

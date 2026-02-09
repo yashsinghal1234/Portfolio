@@ -1014,6 +1014,11 @@ h1 {
   max-width: 560px;
 }
 
+.experience-highlight {
+  color: #f7fbff;
+  font-weight: 600;
+}
+
 .experience-stack {
   display: flex;
   flex-wrap: wrap;
@@ -1042,6 +1047,21 @@ h1 {
   color: #aab5c7;
   line-height: 1.6;
   max-width: 560px;
+}
+
+.experience-cert {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #f7fbff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.experience-cert:hover,
+.experience-cert:focus-visible {
+  color: #f355ff;
 }
 
 .open-source {
@@ -1846,6 +1866,22 @@ h1 {
   margin: 10px 0 0;
   color: #cbd6e8;
   line-height: 1.6;
+}
+
+.timeline-cert-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 14px 0 0;
+  color: #f7fbff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.timeline-cert-link:hover,
+.timeline-cert-link:focus-visible {
+  color: #f355ff;
 }
 
 .timeline-media {
