@@ -954,7 +954,6 @@ function AboutPage() {
               </div>
               <div className="footer-col">
                 <p className="footer-heading">More</p>
-                <a href="mailto:singhalyash307@gmail.com">Book a call</a>
                 <a href="https://github.com/yashsinghal1234" target="_blank" rel="noreferrer">Links</a>
                 <a href="https://x.com/singhalyash307" target="_blank" rel="noreferrer">X (Twitter)</a>
                 <a href="/#privacy">Privacy</a>

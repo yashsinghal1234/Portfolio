@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import './App.css'
 import { World } from './WorldGlobe'
 import profileImage from './assets/seedream-4-high-res-fal_Create_a_realistic_b.jpeg'
@@ -304,10 +305,9 @@ const searchGroups = [
       { label: 'Blog', href: '/#blog', icon: 'blog' },
       { label: 'Guestbook', href: '/#guestbook', icon: 'guestbook' },
       { label: 'Bucket List', href: '/#bucket-list', icon: 'bucket' },
-      { label: 'Book a call', href: 'mailto:singhalyash307@gmail.com', icon: 'call' },
       { label: 'Uses', href: '/#uses', icon: 'uses' },
       { label: 'Attribution', href: '/#attribution', icon: 'attribution' },
-      { label: 'Links', href: '/#links', icon: 'links' },
+      { label: 'Links', href: '/links', icon: 'links' },
     ],
   },
   {
@@ -403,28 +403,125 @@ export const SearchOverlay = ({
   </div>
 )
 
-export const NavBar = ({ aboutHref, aboutNewTab, onSearchOpen }) => (
-  <header className="nav">
-    <div className="brand">Portfolio</div>
-    <nav className="nav-links" aria-label="Primary">
-      <a href="/#home">Home</a>
-      <a href="/#skills">Skills</a>
-      <a href={aboutHref} target={aboutNewTab ? '_blank' : undefined} rel={aboutNewTab ? 'noreferrer' : undefined}>
-        About
-      </a>
-      <a className="nav-cta" href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
-      <a href="/#contact">Contact</a>
-    </nav>
-    <div className="nav-actions">
-      <button className="search-trigger" type="button" aria-label="Open search" onClick={onSearchOpen}>
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" strokeWidth="2" />
-          <path d="M16.5 16.5l4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        </svg>
-      </button>
-    </div>
-  </header>
-)
+export const NavBar = ({ aboutHref, aboutNewTab, onSearchOpen }) => {
+  const location = useLocation()
+  const isHome = location.pathname === '/'
+  const isAbout = location.pathname.startsWith('/about')
+  const isLinks = location.pathname.startsWith('/links')
+  const [isMoreOpen, setIsMoreOpen] = useState(false)
+  const [isMoreLocked, setIsMoreLocked] = useState(false)
+  const moreRef = useRef(null)
+
+  useEffect(() => {
+    if (!isMoreLocked) return undefined
+
+    const handleClickOutside = (event) => {
+      if (moreRef.current && !moreRef.current.contains(event.target)) {
+        setIsMoreLocked(false)
+        setIsMoreOpen(false)
+      }
+    }
+
+    window.addEventListener('mousedown', handleClickOutside)
+    return () => window.removeEventListener('mousedown', handleClickOutside)
+  }, [isMoreLocked])
+
+  const handleMoreEnter = () => {
+    if (!isMoreLocked) setIsMoreOpen(true)
+  }
+
+  const handleMoreLeave = () => {
+    if (!isMoreLocked) setIsMoreOpen(false)
+  }
+
+  const handleMoreClick = () => {
+    if (isMoreLocked) {
+      setIsMoreLocked(false)
+      setIsMoreOpen(false)
+      return
+    }
+
+    setIsMoreOpen(true)
+    setIsMoreLocked(true)
+  }
+
+  return (
+    <header className="nav">
+      <div className="brand">Portfolio</div>
+      <nav className="nav-links" aria-label="Primary">
+        <a href="/#home" className={isHome ? 'is-active' : ''}>Home</a>
+        <a
+          href={aboutHref}
+          target={aboutNewTab ? '_blank' : undefined}
+          rel={aboutNewTab ? 'noreferrer' : undefined}
+          className={isAbout ? 'is-active' : ''}
+        >
+          About
+        </a>
+        <a href="/#projects">Projects</a>
+        <a className="nav-cta" href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+        <div
+          className={`nav-more ${isMoreOpen ? 'is-open' : ''} ${isMoreLocked ? 'is-locked' : ''}`}
+          onMouseEnter={handleMoreEnter}
+          onMouseLeave={handleMoreLeave}
+          ref={moreRef}
+        >
+          <button
+            className={`nav-more-trigger ${isLinks || isMoreOpen ? 'is-active' : ''}`}
+            type="button"
+            aria-expanded={isMoreOpen}
+            aria-haspopup="true"
+            onClick={handleMoreClick}
+          >
+            More
+            <span className="nav-more-arrow" aria-hidden="true">
+              <svg viewBox="0 0 20 20">
+                <path
+                  d="M5 7.5l5 5 5-5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+          </button>
+          <div className="nav-more-panel" role="menu">
+            <div className="nav-more-grid">
+              <div className="nav-more-featured">
+                <a href="/#guestbook" className="nav-more-card nav-more-guestbook" role="menuitem">
+                  <span className="nav-more-card-title">Guestbook</span>
+                  <span className="nav-more-card-sub">Let me know you were here</span>
+                </a>
+                <a href="/#bucket-list" className="nav-more-card nav-more-bucket" role="menuitem">
+                  <span className="nav-more-card-title">Bucket List</span>
+                  <span className="nav-more-card-sub">Things to do at least once</span>
+                </a>
+                <a href="/links" className="nav-more-card nav-more-links" role="menuitem">
+                  <span className="nav-more-card-title">Links</span>
+                  <span className="nav-more-card-sub">All my links are here</span>
+                </a>
+                <a href="/#contact" className="nav-more-card nav-more-contact" role="menuitem">
+                  <span className="nav-more-card-title">Contact</span>
+                  <span className="nav-more-card-sub">Let&apos;s talk</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div className="nav-actions">
+        <button className="search-trigger" type="button" aria-label="Open search" onClick={onSearchOpen}>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" strokeWidth="2" />
+            <path d="M16.5 16.5l4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </button>
+      </div>
+    </header>
+  )
+}
 
 export const useTimelineGlow = (timelineRef, sectionRef) => {
   useEffect(() => {
@@ -1457,7 +1554,6 @@ function App() {
               </div>
               <div className="footer-col">
                 <p className="footer-heading">More</p>
-                <a href="mailto:singhalyash307@gmail.com">Book a call</a>
                 <a href="https://github.com/yashsinghal1234" target="_blank" rel="noreferrer">Links</a>
                 <a href="https://x.com/singhalyash307" target="_blank" rel="noreferrer">X (Twitter)</a>
                 <a href="#privacy">Privacy</a>
