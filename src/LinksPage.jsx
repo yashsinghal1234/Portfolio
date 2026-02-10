@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+  ContactDialog,
   NavBar,
   SearchOverlay,
   getFilteredGroups,
@@ -83,15 +84,26 @@ const linkSections = [
 
 function LinksPage() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isContactOpen, setIsContactOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 
   useEscapeClose(isSearchOpen, () => setIsSearchOpen(false))
+  useEscapeClose(isContactOpen, () => setIsContactOpen(false))
+
+  const handleOpenContact = (event) => {
+    if (event) event.preventDefault()
+    setIsContactOpen(true)
+  }
 
   const filteredGroups = getFilteredGroups(searchQuery)
 
   return (
     <div className="page links-page">
-      <NavBar aboutHref="/about" onSearchOpen={() => setIsSearchOpen(true)} />
+      <NavBar
+        aboutHref="/about"
+        onSearchOpen={() => setIsSearchOpen(true)}
+        onContactOpen={handleOpenContact}
+      />
       <SearchOverlay
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
@@ -99,6 +111,7 @@ function LinksPage() {
         onSearchChange={setSearchQuery}
         filteredGroups={filteredGroups}
       />
+      <ContactDialog isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
 
       <header className="links-hero">
         <p className="links-kicker">NETWORK</p>

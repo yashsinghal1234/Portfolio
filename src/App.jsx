@@ -403,7 +403,226 @@ export const SearchOverlay = ({
   </div>
 )
 
-export const NavBar = ({ aboutHref, aboutNewTab, onSearchOpen }) => {
+export const ContactDialog = ({ isOpen, onClose }) => {
+  const [isMessageOpen, setIsMessageOpen] = useState(false)
+  const [messageText, setMessageText] = useState('')
+  const [nameValue, setNameValue] = useState('')
+  const [emailValue, setEmailValue] = useState('')
+  const [errors, setErrors] = useState({})
+  const [isSending, setIsSending] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const messageCount = messageText.length
+
+  const handleClose = () => {
+    setIsMessageOpen(false)
+    setMessageText('')
+    setNameValue('')
+    setEmailValue('')
+    setErrors({})
+    setIsSending(false)
+    setIsSuccess(false)
+    setSubmitError('')
+    onClose()
+  }
+
+  const handleBack = () => {
+    setIsMessageOpen(false)
+  }
+
+  const validateForm = () => {
+    const nextErrors = {}
+    const trimmedName = nameValue.trim()
+    const trimmedEmail = emailValue.trim()
+    const trimmedMessage = messageText.trim()
+
+    if (!trimmedName) nextErrors.name = 'Name is required'
+    if (!trimmedEmail) {
+      nextErrors.email = 'Email is required'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      nextErrors.email = 'Enter a valid email'
+    }
+    if (!trimmedMessage) nextErrors.message = 'Message is required'
+
+    setErrors(nextErrors)
+    return Object.keys(nextErrors).length === 0
+  }
+
+  const handleSubmit = async () => {
+    if (isSending) return
+    setSubmitError('')
+    if (!validateForm()) return
+
+    setIsSending(true)
+    try {
+      const response = await fetch('https://formspree.io/f/xqedeeko', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: nameValue.trim(),
+          email: emailValue.trim(),
+          message: messageText.trim(),
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Submission failed')
+      }
+
+      setIsSuccess(true)
+    } catch (error) {
+      setSubmitError('Unable to send. Please try again.')
+    } finally {
+      setIsSending(false)
+    }
+  }
+
+  return (
+    <div className={`contact-overlay ${isOpen ? 'is-open' : ''}`}>
+      <div className="contact-backdrop" role="presentation" onClick={handleClose} />
+      <div className="contact-dialog" role="dialog" aria-modal="true" aria-label="Get in touch">
+        <span className="contact-handle" aria-hidden="true" />
+        <div className="contact-header">
+          <p className="contact-title">{isMessageOpen ? 'Send a message' : 'Get in touch'}</p>
+          <button className="contact-close" type="button" aria-label="Close" onClick={handleClose}>
+            ×
+          </button>
+        </div>
+        {isMessageOpen ? (
+          <div className="contact-form">
+            <button className="contact-back" type="button" onClick={handleBack}>
+              ← Back to options
+            </button>
+            {isSuccess ? (
+              <div className="contact-success">
+                <div className="contact-success-check">
+                  <svg viewBox="0 0 52 52" aria-hidden="true">
+                    <circle cx="26" cy="26" r="25" fill="none" stroke="currentColor" strokeWidth="2" />
+                    <path d="M14 27l8 8 16-16" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                <p className="contact-success-title">Message sent</p>
+                <p className="contact-success-sub">Thanks! I&apos;ll get back to you soon.</p>
+              </div>
+            ) : (
+              <>
+                <div className="contact-form-grid">
+                  <label className="contact-field">
+                    <span>Name</span>
+                    <input
+                      className="contact-input"
+                      type="text"
+                      placeholder="Jane Doe"
+                      value={nameValue}
+                      onChange={(event) => setNameValue(event.target.value)}
+                    />
+                    {errors.name ? <span className="contact-error">{errors.name}</span> : null}
+                  </label>
+                  <label className="contact-field">
+                    <span>Email</span>
+                    <input
+                      className="contact-input"
+                      type="email"
+                      placeholder="jane@example.com"
+                      value={emailValue}
+                      onChange={(event) => setEmailValue(event.target.value)}
+                    />
+                    {errors.email ? <span className="contact-error">{errors.email}</span> : null}
+                  </label>
+                </div>
+                <label className="contact-field contact-field-full">
+                  <span>Message</span>
+                  <textarea
+                    className="contact-textarea"
+                    placeholder="How can I help you?"
+                    maxLength={1000}
+                    value={messageText}
+                    onChange={(event) => setMessageText(event.target.value)}
+                  />
+                  <span className="contact-count">{messageCount}/1000</span>
+                  {errors.message ? <span className="contact-error">{errors.message}</span> : null}
+                </label>
+                {submitError ? <p className="contact-submit-error">{submitError}</p> : null}
+                <button
+                  className={`contact-submit ${isSending ? 'is-sending' : ''}`}
+                  type="button"
+                  onClick={handleSubmit}
+                >
+                  <span className="contact-submit-plane" aria-hidden="true">✈</span>
+                  <span className="contact-submit-text" aria-hidden="true">
+                    {'Send Message'.split('').map((char, index) => (
+                      <span key={`${char}-${index}`} style={{ '--i': index }}>
+                        {char === ' ' ? '\u00A0' : char}
+                      </span>
+                    ))}
+                  </span>
+                  <span className="sr-only">Send Message</span>
+                </button>
+              </>
+            )}
+          </div>
+        ) : (
+          <>
+            <div className="contact-cards">
+              <a
+                className="contact-card"
+                href="https://www.linkedin.com/in/yash-singhal-94894b317/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="contact-card-icon" aria-hidden="true">
+                  <img className="contact-icon-round" src="/icons/linkedin_2931621.png" alt="" />
+                </span>
+                <div>
+                  <p className="contact-card-title">Message on LinkedIn</p>
+                  <p className="contact-card-sub">Let&apos;s connect there</p>
+                </div>
+              </a>
+              <a className="contact-card" href="mailto:singhalyash307@gmail.com">
+                <span className="contact-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 6h16v12H4z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+                    <path d="M4 7l8 6 8-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                  </svg>
+                </span>
+                <div>
+                  <p className="contact-card-title">Email Me</p>
+                  <p className="contact-card-sub">singhalyash307@gmail.com</p>
+                </div>
+              </a>
+            </div>
+            <button className="contact-message" type="button" onClick={() => setIsMessageOpen(true)}>
+              <span className="contact-message-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4 3v-3H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+                </svg>
+              </span>
+              <span className="contact-message-text">Or write me a message here</span>
+              <span className="contact-message-cta">Tap to open</span>
+            </button>
+            <p className="contact-divider">Connect on socials</p>
+            <div className="contact-socials">
+              <a href="https://www.linkedin.com/in/yash-singhal-94894b317/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <img className="contact-icon-round" src="/icons/linkedin_2931621.png" alt="" />
+              </a>
+              <a href="https://github.com/yashsinghal1234" target="_blank" rel="noreferrer" aria-label="GitHub">
+                <img src="https://cdn.simpleicons.org/github/FFFFFF" alt="" />
+              </a>
+              <a href="https://x.com/singhalyash307" target="_blank" rel="noreferrer" aria-label="X">
+                <img src="https://cdn.simpleicons.org/x/FFFFFF" alt="" />
+              </a>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export const NavBar = ({ aboutHref, aboutNewTab, onSearchOpen, onContactOpen }) => {
   const location = useLocation()
   const isHome = location.pathname === '/'
   const isAbout = location.pathname.startsWith('/about')
@@ -443,6 +662,12 @@ export const NavBar = ({ aboutHref, aboutNewTab, onSearchOpen }) => {
 
     setIsMoreOpen(true)
     setIsMoreLocked(true)
+  }
+
+  const handleContactClick = (event) => {
+    if (!onContactOpen) return
+    event.preventDefault()
+    onContactOpen()
   }
 
   return (
@@ -502,7 +727,12 @@ export const NavBar = ({ aboutHref, aboutNewTab, onSearchOpen }) => {
                   <span className="nav-more-card-title">Links</span>
                   <span className="nav-more-card-sub">All my links are here</span>
                 </a>
-                <a href="/#contact" className="nav-more-card nav-more-contact" role="menuitem">
+                <a
+                  href="/#contact"
+                  className="nav-more-card nav-more-contact"
+                  role="menuitem"
+                  onClick={handleContactClick}
+                >
                   <span className="nav-more-card-title">Contact</span>
                   <span className="nav-more-card-sub">Let&apos;s talk</span>
                 </a>
@@ -780,6 +1010,7 @@ function App() {
   const [selectedZone, setSelectedZone] = useState('India')
   const [activeProject, setActiveProject] = useState(projects[0].id)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isContactOpen, setIsContactOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const projectRefs = useRef([])
   const timelineRef = useRef(null)
@@ -817,6 +1048,12 @@ function App() {
   }, [])
   useTimelineGlow(timelineRef, experienceRef)
   useEscapeClose(isSearchOpen, () => setIsSearchOpen(false))
+  useEscapeClose(isContactOpen, () => setIsContactOpen(false))
+
+  const handleOpenContact = (event) => {
+    if (event) event.preventDefault()
+    setIsContactOpen(true)
+  }
 
   useEffect(() => {
     let cancelled = false
@@ -1084,7 +1321,11 @@ function App() {
 
   return (
     <div className="page">
-      <NavBar aboutHref="/about" onSearchOpen={() => setIsSearchOpen(true)} />
+      <NavBar
+        aboutHref="/about"
+        onSearchOpen={() => setIsSearchOpen(true)}
+        onContactOpen={handleOpenContact}
+      />
       <SearchOverlay
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
@@ -1092,6 +1333,7 @@ function App() {
         onSearchChange={setSearchQuery}
         filteredGroups={filteredGroups}
       />
+      <ContactDialog isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
 
       <main className="hero" id="home">
         <p className="eyebrow">Hello, I'm <span className="accent">Yash Singhal</span></p>
@@ -1105,7 +1347,9 @@ function App() {
         <p className="supporting">Passionate about cutting-edge technologies</p>
 
         <div className="cta-row">
-          <a className="btn primary" href="#contact">Let's Connect</a>
+          <button className="btn primary" type="button" onClick={handleOpenContact}>
+            Let's Connect
+          </button>
           <a className="btn ghost" href="/resume.pdf" target="_blank" rel="noreferrer">
             <span className="mail-icon" aria-hidden="true">↗</span>
             Resume
@@ -1222,7 +1466,9 @@ function App() {
         <div className="panel contact" id="contact">
           <div className="crest" aria-hidden="true">YS</div>
           <p className="panel-heading">Let's work together on your next project</p>
-          <a className="btn primary wide" href="mailto:hello@example.com">singhalyash307@gmail.com</a>
+          <button className="btn primary wide" type="button" onClick={handleOpenContact}>
+            singhalyash307@gmail.com
+          </button>
         </div>
       </section>
 
@@ -1508,10 +1754,10 @@ function App() {
             <span className="impact-emphasis">creation</span>
             <span>let&apos;s make it happen!</span>
           </h2>
-          <a className="impact-cta" href="#contact">
+          <button className="impact-cta" type="button" onClick={handleOpenContact}>
             <span>Get in touch</span>
             <span className="impact-cta-icon" aria-hidden="true">→</span>
-          </a>
+          </button>
           <p className="impact-sub">I&apos;m available for full-time roles &amp; freelance projects.</p>
           <p className="impact-note">
             I thrive on crafting dynamic web applications, and delivering seamless user experiences.

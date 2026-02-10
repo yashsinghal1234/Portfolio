@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import {
   AboutSection,
+  ContactDialog,
   ExperienceSection,
   NavBar,
   SearchOverlay,
@@ -27,6 +28,7 @@ function AboutPage() {
   const codolioProfileUrl = 'https://r.jina.ai/http://codolio.com/profile/yashsinghal'
   const profileUrl = `https://github.com/${githubUser}`
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isContactOpen, setIsContactOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const timelineRef = useRef(null)
   const experienceRef = useRef(null)
@@ -199,6 +201,12 @@ function AboutPage() {
 
   useTimelineGlow(timelineRef, experienceRef)
   useEscapeClose(isSearchOpen, () => setIsSearchOpen(false))
+  useEscapeClose(isContactOpen, () => setIsContactOpen(false))
+
+  const handleOpenContact = (event) => {
+    if (event) event.preventDefault()
+    setIsContactOpen(true)
+  }
 
   const filteredGroups = getFilteredGroups(searchQuery)
 
@@ -468,7 +476,11 @@ function AboutPage() {
 
   return (
     <div className="page">
-      <NavBar aboutHref="/about" onSearchOpen={() => setIsSearchOpen(true)} />
+      <NavBar
+        aboutHref="/about"
+        onSearchOpen={() => setIsSearchOpen(true)}
+        onContactOpen={handleOpenContact}
+      />
       <SearchOverlay
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
@@ -476,6 +488,7 @@ function AboutPage() {
         onSearchChange={setSearchQuery}
         filteredGroups={filteredGroups}
       />
+      <ContactDialog isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
       <AboutSection />
       <section className="education-section" id="education" aria-label="Education">
         <div className="open-source-header">
