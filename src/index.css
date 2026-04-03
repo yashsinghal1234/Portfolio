@@ -52,6 +52,40 @@ body::before {
   opacity: 0.5;
 }
 
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+@media (pointer: fine) {
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  label,
+  video {
+    cursor: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .custom-cursor {
+    display: none;
+  }
+}
+
 a {
   color: inherit;
 }

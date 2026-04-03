@@ -3,12 +3,14 @@ import {
   ContactDialog,
   NavBar,
   SearchOverlay,
+  CustomCursor,
   getFilteredGroups,
   useEscapeClose,
 } from './App.jsx'
 import './LinksPage.css'
 import profileImage from './assets/seedream-4-high-res-fal_Create_a_realistic_b.jpeg'
 import linkedinIcon from './assets/icons/linkedin.svg'
+import resumePdf from '../data/resume.pdf'
 
 const linkSections = [
   {
@@ -52,7 +54,7 @@ const linkSections = [
       {
         label: 'Resume',
         sub: 'View PDF',
-        href: '/resume.pdf',
+        href: resumePdf,
         icon: 'https://cdn.simpleicons.org/readthedocs/FFFFFF',
       },
     ],
@@ -99,6 +101,7 @@ function LinksPage() {
 
   return (
     <div className="page links-page">
+      <CustomCursor />
       <NavBar
         aboutHref="/about"
         onSearchOpen={() => setIsSearchOpen(true)}

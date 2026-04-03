@@ -5,6 +5,8 @@ import { World } from './WorldGlobe'
 import profileImage from './assets/seedream-4-high-res-fal_Create_a_realistic_b.jpeg'
 import gcpGenaiCert from './assets/certificates/Certificate _ Virtual Internship _ Skill Wallet.pdf'
 import aicteFrontendCert from './assets/certificates/AICTE B3_PL_4001-6099-2030.pdf'
+import resumePdf from '../data/resume.pdf'
+import couponCareVideo from './assets/videos/couponcare-demo.mp4'
 
 const skills = [
   { iconUrl: 'https://cdn.simpleicons.org/html5/E34F26', label: 'HTML' },
@@ -122,23 +124,33 @@ const globeArcs = [
 
 const projects = [
   {
-    id: 'next-ventures',
-    title: 'Next Ventures',
+    id: 'coupon-care',
+    title: 'CouponCare',
+    type: 'Web app',
+    date: '04 2026',
     subtitle:
-      'A space for entrepreneurs to pitch ideas, explore others, and gain exposure with clean design',
+      'A full-stack platform for donating and requesting discount coupons with approvals and a modern dark UI',
     description:
-      "A platform designed for early-stage entrepreneurs to pitch, browse, and engage with startup ideas. It's built to impress both users and investors with blazing speed, compelling visuals, and a modern tech stack.",
+      'CouponCare connects donors and recipients through a simple coupon sharing workflow with approval-based requests and secure access control.',
     bullets: [
-      'Leveraged partial prerendering for faster loading.',
-      'Simplified idea submission with a clean, intuitive flow.',
-      'Enhanced browsing with smooth performance optimizations.',
+      'Enable donors to list coupons and approve recipient requests.',
+      'Guide recipients through requesting discounts with a clean flow.',
+      'Secure the app with JWT-based authentication and role-ready endpoints.',
     ],
-    tags: ['Next.js', 'React', 'Sanity CMS', 'TypeScript', 'Tailwind CSS'],
+    tags: ['React', 'Vite', 'Tailwind CSS', 'Node.js', 'Express', 'MongoDB'],
     accent: 'magenta',
+    media: {
+      type: 'video',
+      src: couponCareVideo,
+      label: 'CouponCare demo',
+      link: 'https://couponcare-vaen.vercel.app',
+    },
   },
   {
     id: 'finote-app',
     title: 'Finote App',
+    type: 'Mobile app',
+    date: '01 2026',
     subtitle:
       'An intuitive mobile companion for organizing your digital wallets and analyzing your financial health',
     description:
@@ -151,6 +163,61 @@ const projects = [
     ],
     tags: ['Expo', 'TypeScript', 'Firebase', 'Zod', 'Zustand'],
     accent: 'violet',
+  },
+]
+
+export const portfolioProjects = [
+  ...projects,
+  {
+    id: 'next-ventures',
+    title: 'Next Ventures',
+    type: 'Web app',
+    date: '11 2025',
+    subtitle:
+      'A space for entrepreneurs to pitch ideas, explore others, and gain exposure with clean design',
+    description:
+      'A concept platform for early-stage founders to pitch, browse, and connect with other builders.',
+    bullets: [
+      'Streamlined idea submission into a guided, multi-step flow.',
+      'Designed a discovery grid with filters for sector and traction.',
+      'Built an engagement loop for comments and endorsements.',
+    ],
+    tags: ['Next.js', 'React', 'Sanity CMS', 'TypeScript', 'Tailwind CSS'],
+    accent: 'magenta',
+  },
+  {
+    id: 'signal-desk',
+    title: 'Signal Desk',
+    type: 'Web app',
+    date: '08 2025',
+    subtitle:
+      'Operations console for monitoring deployments, incidents, and uptime in real time',
+    description:
+      'A control-room dashboard that unifies CI/CD status, alerts, and runbooks in one view.',
+    bullets: [
+      'Unified deployment, alerting, and incident views into one timeline.',
+      'Added quick actions to acknowledge incidents and open runbooks.',
+      'Designed dark-mode charts for at-a-glance status checks.',
+    ],
+    tags: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB'],
+    accent: 'violet',
+  },
+  {
+    id: 'atlas-notes',
+    title: 'Atlas Notes',
+    type: 'Web app',
+    date: '05 2025',
+    subtitle:
+      'Lightweight knowledge base for teams with fast search and structured pages',
+    description:
+      'A writing-first workspace focused on clear structure, quick search, and tidy navigation.',
+    bullets: [
+      'Built a markdown-first editor with block-based sections.',
+      'Implemented instant search with tags, folders, and filters.',
+      'Created a clean reading mode for focused documentation.',
+    ],
+    tags: ['React', 'Vite', 'Tailwind CSS', 'Markdown', 'Node.js'],
+    accent: 'magenta',
   },
 ]
 
@@ -301,7 +368,7 @@ const searchGroups = [
     items: [
       { label: 'Home', href: '/#home', icon: 'home' },
       { label: 'About', href: '/about', icon: 'about' },
-      { label: 'Projects', href: '/#projects', icon: 'projects' },
+      { label: 'Projects', href: '/portfolio', icon: 'projects' },
       { label: 'Blog', href: '/#blog', icon: 'blog' },
       { label: 'Guestbook', href: '/#guestbook', icon: 'guestbook' },
       { label: 'Bucket List', href: '/#bucket-list', icon: 'bucket' },
@@ -321,7 +388,7 @@ const searchGroups = [
         icon: 'linkedin',
       },
       { label: 'X (Twitter)', href: 'https://x.com/singhalyash307', external: true, icon: 'twitter' },
-      { label: 'Resume', href: '/resume.pdf', external: true, icon: 'resume' },
+      { label: 'Resume', href: resumePdf, external: true, icon: 'resume' },
     ],
   },
   {
@@ -626,6 +693,7 @@ export const NavBar = ({ aboutHref, aboutNewTab, onSearchOpen, onContactOpen }) 
   const location = useLocation()
   const isHome = location.pathname === '/'
   const isAbout = location.pathname.startsWith('/about')
+  const isPortfolio = location.pathname.startsWith('/portfolio')
   const isLinks = location.pathname.startsWith('/links')
   const [isMoreOpen, setIsMoreOpen] = useState(false)
   const [isMoreLocked, setIsMoreLocked] = useState(false)
@@ -683,8 +751,8 @@ export const NavBar = ({ aboutHref, aboutNewTab, onSearchOpen, onContactOpen }) 
         >
           About
         </a>
-        <a href="/#projects">Projects</a>
-        <a className="nav-cta" href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+        <a href="/portfolio" className={isPortfolio ? 'is-active' : ''}>Projects</a>
+        <a className="nav-cta" href={resumePdf} target="_blank" rel="noreferrer">Resume</a>
         <div
           className={`nav-more ${isMoreOpen ? 'is-open' : ''} ${isMoreLocked ? 'is-locked' : ''}`}
           onMouseEnter={handleMoreEnter}
@@ -801,6 +869,28 @@ export const useEscapeClose = (isOpen, onClose) => {
 
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [isOpen, onClose])
+}
+
+export const CustomCursor = () => {
+  const cursorRef = useRef(null)
+
+  useEffect(() => {
+    const cursor = cursorRef.current
+    if (!cursor || !window.matchMedia('(pointer: fine)').matches) return
+
+    const handleMove = (event) => {
+      cursor.style.opacity = '1'
+      cursor.style.left = `${event.clientX}px`
+      cursor.style.top = `${event.clientY}px`
+    }
+
+    window.addEventListener('mousemove', handleMove)
+    return () => {
+      window.removeEventListener('mousemove', handleMove)
+    }
+  }, [])
+
+  return <div className="custom-cursor" ref={cursorRef} aria-hidden="true" />
 }
 
 export const AboutSection = () => (
@@ -1053,6 +1143,15 @@ function App() {
   const handleOpenContact = (event) => {
     if (event) event.preventDefault()
     setIsContactOpen(true)
+  }
+
+  const handleMediaLink = (event, url) => {
+    if (!url) return
+    if (event) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    window.open(url, '_blank', 'noopener,noreferrer')
   }
 
   useEffect(() => {
@@ -1321,6 +1420,7 @@ function App() {
 
   return (
     <div className="page">
+      <CustomCursor />
       <NavBar
         aboutHref="/about"
         onSearchOpen={() => setIsSearchOpen(true)}
@@ -1350,7 +1450,7 @@ function App() {
           <button className="btn primary" type="button" onClick={handleOpenContact}>
             Let's Connect
           </button>
-          <a className="btn ghost" href="/resume.pdf" target="_blank" rel="noreferrer">
+          <a className="btn ghost" href={resumePdf} target="_blank" rel="noreferrer">
             <span className="mail-icon" aria-hidden="true">↗</span>
             Resume
           </a>
@@ -1445,7 +1545,7 @@ function App() {
           <div
             style={{
               width: '100%',
-              height: 230,
+              height: 280,
               marginTop: '1rem',
               overflow: 'hidden',
               borderRadius: 24,
@@ -1454,8 +1554,8 @@ function App() {
             <div
               style={{
                 width: '100%',
-                height: 420,
-                transform: 'translateY(-50px)',
+                height: 460,
+                transform: 'translateY(-40px)',
               }}
             >
               <World globeConfig={globeConfig} data={globeArcs} activeLocation={activeLocation} />
@@ -1463,12 +1563,49 @@ function App() {
           </div>
         </div>
 
-        <div className="panel contact" id="contact">
-          <div className="crest" aria-hidden="true">YS</div>
-          <p className="panel-heading">Let's work together on your next project</p>
-          <button className="btn primary wide" type="button" onClick={handleOpenContact}>
-            singhalyash307@gmail.com
-          </button>
+        <div className="panel live-feed" id="contact">
+          <span className="panel-kicker">Live feed</span>
+          <h3 className="panel-heading">System status</h3>
+          <div className="console-window" role="presentation">
+            <div className="console-bar">
+              <span className="console-dot is-pink" aria-hidden="true" />
+              <span className="console-dot is-yellow" aria-hidden="true" />
+              <span className="console-dot is-green" aria-hidden="true" />
+              <span className="console-title">yash@portfolio</span>
+            </div>
+            <div className="console-body">
+              <div className="console-row is-command" style={{ '--delay': '0ms' }}>
+                <span className="console-prompt">$</span>
+                <span className="console-text">deploying couponcare</span>
+              </div>
+              <div className="console-row is-status" style={{ '--delay': '900ms' }}>
+                <span className="console-prompt">&gt;</span>
+                <span className="console-text">live on production</span>
+              </div>
+              <div className="console-row is-command" style={{ '--delay': '1800ms' }}>
+                <span className="console-prompt">$</span>
+                <span className="console-text">running security scan</span>
+              </div>
+              <div className="console-row is-status" style={{ '--delay': '2700ms' }}>
+                <span className="console-prompt">&gt;</span>
+                <span className="console-text">0 vulnerabilities found</span>
+              </div>
+              <div className="console-row is-command" style={{ '--delay': '3600ms' }}>
+                <span className="console-prompt">$</span>
+                <span className="console-text">building portfolio updates</span>
+              </div>
+              <div className="console-row is-status" style={{ '--delay': '4500ms' }}>
+                <span className="console-prompt">&gt;</span>
+                <span className="console-text">60fps. shipped.</span>
+              </div>
+              <div className="console-row is-command console-cursor" style={{ '--delay': '5400ms' }}>
+                <span className="console-prompt">$</span>
+                <button className="console-link" type="button" onClick={handleOpenContact}>
+                  contact --email singhalyash307@gmail.com
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1492,7 +1629,28 @@ function App() {
                   <span className="project-arrow">→</span>
                 </div>
                 <div className="project-media" aria-hidden="true">
-                  <div className="project-frame" />
+                  <div className="project-frame">
+                    {project.media?.type === 'video' ? (
+                      <video
+                        className="project-video"
+                        src={project.media.src}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        aria-label={`${project.media.label} (opens live site)`}
+                        onClick={(event) => handleMediaLink(event, project.media?.link)}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter' || event.key === ' ') {
+                            handleMediaLink(event, project.media?.link)
+                          }
+                        }}
+                        role={project.media?.link ? 'link' : undefined}
+                        tabIndex={project.media?.link ? 0 : undefined}
+                        title="Open live site"
+                      />
+                    ) : null}
+                  </div>
                 </div>
               </a>
             ))}
@@ -1523,7 +1681,7 @@ function App() {
             ))}
           </div>
         </div>
-        <a className="work-cta" href="#projects">
+        <a className="work-cta" href="/portfolio">
           <span>See more projects</span>
           <span className="work-cta-icon" aria-hidden="true">→</span>
         </a>
@@ -1794,7 +1952,7 @@ function App() {
               <div className="footer-col">
                 <p className="footer-heading">Specifics</p>
                 <a href="#experience">Education & Certifications</a>
-                <a href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+                <a href={resumePdf} target="_blank" rel="noreferrer">Resume</a>
                 <a href="#contact">Contact</a>
                 <a href="#experience">Professional Journey</a>
               </div>

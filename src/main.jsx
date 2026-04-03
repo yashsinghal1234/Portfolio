@@ -5,6 +5,8 @@ import './index.css'
 import App from './App.jsx'
 import AboutPage from './AboutPage.jsx'
 import LinksPage from './LinksPage.jsx'
+import PortfolioPage from './PortfolioPage.jsx'
+import PortfolioDetailPage from './PortfolioDetailPage.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -13,6 +15,8 @@ createRoot(document.getElementById('root')).render(
         <Route path="/" element={<App />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/links" element={<LinksPage />} />
+        <Route path="/portfolio" element={<PortfolioPage />} />
+        <Route path="/portfolio/:projectId" element={<PortfolioDetailPage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

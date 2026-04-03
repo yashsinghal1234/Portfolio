@@ -5,6 +5,7 @@ import {
   ExperienceSection,
   NavBar,
   SearchOverlay,
+  CustomCursor,
   getFilteredGroups,
   useEscapeClose,
   useTimelineGlow,
@@ -19,6 +20,8 @@ import pythonEssentialsCert from './assets/certificates/PythonEssential1_certifi
 import redHatLinuxCert from './assets/certificates/RedHat_os_certifiacte.pdf'
 import mongodbCrudCert from './assets/certificates/SkillsCert20260129-32-wx0ke7.pdf'
 import tcsIonCert from './assets/certificates/tcs_young_ion.pdf'
+import resumePdf from '../data/resume.pdf'
+import './AboutPage.css'
 
 function AboutPage() {
   const githubUser = 'yashsinghal1234'
@@ -475,7 +478,8 @@ function AboutPage() {
   }
 
   return (
-    <div className="page">
+    <div className="page about-page">
+      <CustomCursor />
       <NavBar
         aboutHref="/about"
         onSearchOpen={() => setIsSearchOpen(true)}
@@ -648,9 +652,8 @@ function AboutPage() {
                     <button
                       key={tag}
                       type="button"
-                      className={`certificates-tag ${
-                        activeCertificateTag === tag ? 'is-active' : ''
-                      }`}
+                      className={`certificates-tag ${activeCertificateTag === tag ? 'is-active' : ''
+                        }`}
                       onClick={() => {
                         if (tag === 'All') {
                           setActiveCertificateTag('All')
@@ -750,17 +753,17 @@ function AboutPage() {
               >
                 {weeks.length
                   ? weeks.flatMap((week) =>
-                      week.map((entry) => (
-                        <span
-                          key={entry.date}
-                          className={`contribution-cell ${getIntensity(entry.count)}`}
-                          title={`${entry.count} contributions on ${entry.date}`}
-                        />
-                      ))
-                    )
+                    week.map((entry) => (
+                      <span
+                        key={entry.date}
+                        className={`contribution-cell ${getIntensity(entry.count)}`}
+                        title={`${entry.count} contributions on ${entry.date}`}
+                      />
+                    ))
+                  )
                   : Array.from({ length: 52 * 7 }, (_, index) => (
-                      <span key={index} className="contribution-cell empty" />
-                    ))}
+                    <span key={index} className="contribution-cell empty" />
+                  ))}
               </div>
               <div className="open-source-footer">
                 <span>{contributionTotal} contributions in the last year</span>
@@ -855,17 +858,17 @@ function AboutPage() {
               >
                 {leetcodeWeeks.length
                   ? leetcodeWeeks.flatMap((week) =>
-                      week.map((entry) => (
-                        <span
-                          key={entry.date}
-                          className={`contribution-cell ${getIntensity(entry.count)}`}
-                          title={`${entry.count} submissions on ${entry.date}`}
-                        />
-                      ))
-                    )
+                    week.map((entry) => (
+                      <span
+                        key={entry.date}
+                        className={`contribution-cell ${getIntensity(entry.count)}`}
+                        title={`${entry.count} submissions on ${entry.date}`}
+                      />
+                    ))
+                  )
                   : Array.from({ length: 52 * 7 }, (_, index) => (
-                      <span key={index} className="contribution-cell empty" />
-                    ))}
+                    <span key={index} className="contribution-cell empty" />
+                  ))}
               </div>
               <div className="open-source-footer">
                 <span>LeetCode submissions in the last year</span>
@@ -961,7 +964,7 @@ function AboutPage() {
               <div className="footer-col">
                 <p className="footer-heading">Specifics</p>
                 <a href="/#experience">Education & Certifications</a>
-                <a href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+                <a href={resumePdf} target="_blank" rel="noreferrer">Resume</a>
                 <a href="/#contact">Contact</a>
                 <a href="/#experience">Professional Journey</a>
               </div>
@@ -983,7 +986,7 @@ function AboutPage() {
             </div>
           </div>
         </footer>
-        <div className="footer-bar" style={{marginTop: '10px'}} aria-hidden="true" />
+        <div className="footer-bar" style={{ marginTop: '10px' }} aria-hidden="true" />
       </div>
     </div>
   )
