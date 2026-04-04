@@ -67,6 +67,8 @@ const techLogoRows = [
   ],
 ]
 
+const techStripItems = techLogoRows.flat()
+
 const locations = [
   { name: 'UK', lat: 55, lon: -2 },
   { name: 'India', lat: 22, lon: 78 },
@@ -1551,34 +1553,33 @@ function App() {
 
         <div className="panel tech-pills" style={{ paddingLeft: '0', paddingRight: '0' }}>
           <h3 className="panel-heading" style={{ paddingLeft: '20px', paddingRight: '20px' }}>Passionate about cutting-edge technologies</h3>
-          <div className="logo-rows">
-            {techLogoRows.map((row, idx) => (
-              <div className="logo-row" key={idx}>
-                <div className="logo-track">
-                  {row.map((tool) => (
-                    <div className="logo-pill" key={tool.name}>
-                      {tool.logo && (
-                        <span className="logo-icon-wrap">
-                          <img className="logo-icon" src={tool.logo} alt={tool.name} loading="lazy" />
-                        </span>
-                      )}
-                      <span className="logo-label">{tool.name}</span>
-                    </div>
-                  ))}
-                  {/* duplicate once for seamless looping */}
-                  {row.map((tool) => (
-                    <div className="logo-pill" key={`${tool.name}-dup`}>
-                      {tool.logo && (
-                        <span className="logo-icon-wrap">
-                          <img className="logo-icon" src={tool.logo} alt={tool.name} loading="lazy" />
-                        </span>
-                      )}
-                      <span className="logo-label">{tool.name}</span>
-                    </div>
-                  ))}
-                </div>
+          <div className="cross-strips" aria-hidden="true">
+            <div className="cross-strip cross-strip--one">
+              <div className="cross-strip-track">
+                {[...techStripItems, ...techStripItems].map((tool, index) => (
+                  <span className="cross-strip-item" key={`${tool.name}-${index}`}>
+                    {tool.logo ? (
+                      <img src={tool.logo} alt="" aria-hidden="true" loading="lazy" />
+                    ) : null}
+                    <span className="cross-strip-label">{tool.name}</span>
+                    <span className="cross-strip-dot" aria-hidden="true" />
+                  </span>
+                ))}
               </div>
-            ))}
+            </div>
+            <div className="cross-strip cross-strip--two">
+              <div className="cross-strip-track">
+                {[...techStripItems, ...techStripItems].map((tool, index) => (
+                  <span className="cross-strip-item" key={`${tool.name}-alt-${index}`}>
+                    {tool.logo ? (
+                      <img src={tool.logo} alt="" aria-hidden="true" loading="lazy" />
+                    ) : null}
+                    <span className="cross-strip-label">{tool.name}</span>
+                    <span className="cross-strip-dot" aria-hidden="true" />
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
