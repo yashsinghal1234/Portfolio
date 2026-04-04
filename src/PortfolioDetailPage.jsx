@@ -332,7 +332,11 @@ function PortfolioDetailPage() {
                     <div className="detail-up-next-heading">
                         <span>Up next</span>
                     </div>
-                    <a className="detail-up-next-card" href={`/portfolio/${nextProject.id}`}>
+                    <a
+                        className="detail-up-next-card"
+                        href={`/portfolio/${nextProject.id}`}
+                        data-cursor="view-details"
+                    >
                         <h3 className="detail-up-next-title">{nextProject.title}</h3>
                         <p className="detail-up-next-sub">{nextProject.subtitle}</p>
                         <div className="detail-up-next-meta">

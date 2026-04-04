@@ -207,7 +207,12 @@ function PortfolioPage() {
                                 <span className="portfolio-date">{dateLabel}</span>
                             </div>
                             <h2 className="portfolio-name">{project.title}</h2>
-                            <a className="portfolio-card" href={detailHref} aria-label={`View ${project.title} case study`}>
+                            <a
+                                className="portfolio-card"
+                                href={detailHref}
+                                data-cursor="view-details"
+                                aria-label={`View ${project.title} case study`}
+                            >
                                 <p className="portfolio-summary">{project.subtitle}</p>
                                 <div className="portfolio-media">
                                     <div className="portfolio-media-frame">

@@ -6,6 +6,7 @@ import profileImage from './assets/seedream-4-high-res-fal_Create_a_realistic_b.
 import gcpGenaiCert from './assets/certificates/Certificate _ Virtual Internship _ Skill Wallet.pdf'
 import aicteFrontendCert from './assets/certificates/AICTE B3_PL_4001-6099-2030.pdf'
 import resumePdf from '../data/resume.pdf'
+import heroAvatar from '../data/59634c2305dfebcefcce18d4734f8108.jpg'
 import couponCareVideo from './assets/videos/couponcare-demo.mp4'
 
 const skills = [
@@ -882,6 +883,16 @@ export const CustomCursor = () => {
       cursor.style.opacity = '1'
       cursor.style.left = `${event.clientX}px`
       cursor.style.top = `${event.clientY}px`
+
+      const target = event.target instanceof Element ? event.target : null
+      const hoverTarget = target ? target.closest('[data-cursor]') : null
+      const cursorState = hoverTarget?.getAttribute('data-cursor')
+
+      if (cursorState) {
+        cursor.setAttribute('data-state', cursorState)
+      } else {
+        cursor.removeAttribute('data-state')
+      }
     }
 
     window.addEventListener('mousemove', handleMove)
@@ -890,7 +901,39 @@ export const CustomCursor = () => {
     }
   }, [])
 
-  return <div className="custom-cursor" ref={cursorRef} aria-hidden="true" />
+  return (
+    <div className="custom-cursor" ref={cursorRef} aria-hidden="true">
+      <span className="custom-cursor__dot" />
+      <span className="custom-cursor__ring" aria-hidden="true">
+        <svg className="custom-cursor__svg" viewBox="0 0 120 120" focusable="false">
+          <defs>
+            <path
+              id="cursor-ring-path"
+              d="M60 60m0-38a38 38 0 1 1 0 76a38 38 0 1 1 0 -76"
+            />
+          </defs>
+          <circle className="custom-cursor__fill" cx="60" cy="60" r="46" />
+          <circle className="custom-cursor__stroke" cx="60" cy="60" r="46" />
+          <g className="custom-cursor__text-rotator" aria-hidden="true">
+            <text className="custom-cursor__text" dominantBaseline="middle">
+              <textPath
+                href="#cursor-ring-path"
+                startOffset="0%"
+                textLength="238"
+                lengthAdjust="spacingAndGlyphs"
+              >
+                VIEW DETAILS • VIEW DETAILS • VIEW DETAILS •
+              </textPath>
+            </text>
+          </g>
+          <g className="custom-cursor__eye" aria-hidden="true">
+            <path d="M60 48c-12 0-22 8-26 12 4 4 14 12 26 12s22-8 26-12c-4-4-14-12-26-12z" />
+            <circle cx="60" cy="60" r="5" />
+          </g>
+        </svg>
+      </span>
+    </div>
+  )
 }
 
 export const AboutSection = () => (
@@ -1419,7 +1462,7 @@ function App() {
   const filteredGroups = getFilteredGroups(searchQuery)
 
   return (
-    <div className="page">
+    <div className="page home-page">
       <CustomCursor />
       <NavBar
         aboutHref="/about"
@@ -1436,29 +1479,45 @@ function App() {
       <ContactDialog isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
 
       <main className="hero" id="home">
-        <p className="eyebrow">Hello, I'm <span className="accent">Yash Singhal</span></p>
-        <h1>
-          I help founders turn
-          <span className="gradient"> ideas into seamless</span>
-          digital experiences
-        </h1>
-
-        <div className="subhead" aria-label="Role">a Full Stack Developer</div>
-        <p className="supporting">Passionate about cutting-edge technologies</p>
-
-        <div className="cta-row">
-          <button className="btn primary" type="button" onClick={handleOpenContact}>
-            Let's Connect
-          </button>
-          <a className="btn ghost" href={resumePdf} target="_blank" rel="noreferrer">
-            <span className="mail-icon" aria-hidden="true">↗</span>
-            Resume
-          </a>
-          <span className="status">OPEN TO WORK</span>
+        <div className="hero-backdrop" aria-hidden="true">
+          <span className="hero-glow hero-glow--violet" />
+          <span className="hero-glow hero-glow--cyan" />
+          <span className="hero-horizon" />
         </div>
-        <div className="cen">
-          <div className="mouse" aria-hidden="true">
-            <span className="wheel" />
+
+        <div className="hero-content">
+          <div className="hero-announcement" aria-label="Learning updates">
+            <span className="hero-announcement-pill">Learning</span>
+            <span className="hero-announcement-text">DevOps &amp; AI/ML in parallel.</span>
+          </div>
+
+          <h1 className="hero-title">
+            <span className="hero-title-line">I help founders turn</span>
+            <span className="hero-title-line hero-title-italic">ideas into seamless</span>
+            <span className="hero-title-line">digital experiences</span>
+          </h1>
+
+          <div className="hero-identity">
+            <span className="hero-identity-text">Hello, I'm Yash Singhal</span>
+            <span className="hero-avatar">
+              <img src={heroAvatar} alt="Yash Singhal" />
+              <span className="hero-avatar-wave" aria-hidden="true">👋</span>
+            </span>
+            <span className="hero-identity-role">a Full Stack Developer</span>
+          </div>
+
+          <div className="hero-actions">
+            <a className="hero-email" href="mailto:singalyash307@gmail.com">
+              singalyash307@gmail.com
+            </a>
+            <span className="status">OPEN TO WORK</span>
+          </div>
+
+          <div className="hero-scroll" aria-hidden="true">
+            <div className="mouse">
+              <span className="wheel" />
+            </div>
+            <span className="hero-scroll-text">Scroll</span>
           </div>
         </div>
       </main>
