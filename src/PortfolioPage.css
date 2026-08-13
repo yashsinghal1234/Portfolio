@@ -121,7 +121,7 @@
 .portfolio-item::before {
   content: "";
   position: absolute;
-  top: 20px;
+  top: 7px;
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -133,20 +133,24 @@
 .portfolio-item::after {
   content: "";
   position: absolute;
-  top: 24px;
+  top: 14px;
   width: 52px;
   height: 1px;
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.25), transparent);
 }
 
-.portfolio-item.is-left::before,
+.portfolio-item.is-left::before {
+  right: -35px;
+}
 .portfolio-item.is-left::after {
-  right: -26px;
+  right: -28px;
 }
 
-.portfolio-item.is-right::before,
+.portfolio-item.is-right::before {
+  left: -35px;
+}
 .portfolio-item.is-right::after {
-  left: -26px;
+  left: -28px;
 }
 
 .portfolio-item.is-right::after {

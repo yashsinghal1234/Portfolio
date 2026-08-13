@@ -20,7 +20,7 @@ const skills = [
   { iconUrl: 'https://cdn.simpleicons.org/git/F05032', label: 'Git' },
   { iconUrl: 'https://cdn.simpleicons.org/vercel/FFFFFF', label: 'Vercel' },
   { iconUrl: 'https://cdn.simpleicons.org/render/46E3B7', label: 'Render' },
-  { iconUrl: 'https://cdn.simpleicons.org/python/3776AB', label: 'Python' },
+  { iconUrl: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg', label: 'Python' },
   { iconUrl: '/icons/java.svg', label: 'Java' },
   { iconUrl: 'https://cdn.simpleicons.org/cplusplus/00599C', label: 'C++' },
   { iconUrl: '/icons/aws.svg', label: 'AWS' },
@@ -31,7 +31,7 @@ const skills = [
   { iconUrl: 'https://cdn.simpleicons.org/express/FFFFFF', label: 'Express' },
   { iconUrl: 'https://cdn.simpleicons.org/github/FFFFFF', label: 'GitHub' },
   { iconUrl: 'https://cdn.simpleicons.org/gitlab/FC6D26', label: 'GitLab' },
-  { iconUrl: 'https://cdn.simpleicons.org/fastapi/009688', label: 'FastAPI' },
+  { iconUrl: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/fastapi/fastapi-original.svg', label: 'FastAPI' },
   { iconUrl: '/icons/original-59e1174770bd0010f95ddaf2f81eeec0.webp', label: 'GenAI' },
 ]
 
@@ -47,10 +47,10 @@ const techLogoRows = [
   ],
   [
     { name: 'MySQL', logo: 'https://cdn.simpleicons.org/mysql/4479A1' },
-    { name: 'Python', logo: 'https://cdn.simpleicons.org/python/3776AB' },
+    { name: 'Python', logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg' },
     { name: 'Django', logo: '/icons/django.svg' },
     { name: 'Flask', logo: 'https://cdn.simpleicons.org/flask/FFFFFF' },
-    { name: 'FastAPI', logo: 'https://cdn.simpleicons.org/fastapi/009688' },
+    { name: 'FastAPI', logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/fastapi/fastapi-original.svg' },
     { name: 'Java', logo: '/icons/java.svg' },
     { name: 'C++', logo: 'https://cdn.simpleicons.org/cplusplus/00599C' },
   ],
@@ -127,6 +127,61 @@ const globeArcs = [
 
 const projects = [
   {
+    id: 'phishshield-x',
+    title: 'PhishShield-X',
+    type: 'Web app',
+    date: '2026',
+    subtitle: 'Adaptive Multi-Modal Cyber Threat Detection Framework',
+    description: 'An intelligent cybersecurity framework designed to detect phishing and cyber threats through multi-modal analysis.',
+    bullets: [
+      'Built a robust threat detection engine using adaptive models.',
+      'Integrated fast API endpoints for real-time analysis.',
+      'Implemented deep learning layers to improve accuracy.',
+    ],
+    tags: ['React', 'FastAPI', 'Python'],
+    accent: 'pink',
+  },
+  {
+    id: 'sanrachna',
+    title: 'Sanrachna',
+    type: 'Web app',
+    date: '08 2026',
+    subtitle:
+      'AI-enabled construction management ecosystem for planning, tracking, and execution',
+    description:
+      'A modern full-stack platform built to bridge communication and operational gaps across construction sites with AI-assisted planning and predictive analytics.',
+    bullets: [
+      'Streamline planning, workforce coordination, and cost estimation.',
+      'Track issues in real-time and manage safety monitoring.',
+      'Provide AI-driven project assistance and predictive analytics.',
+    ],
+    tags: ['React', 'Node.js', 'TypeScript', 'FastAPI', 'MongoDB'],
+    accent: 'violet',
+    media: {
+      type: 'image',
+      link: 'https://sanrachna-final.vercel.app',
+    },
+  },
+]
+
+export const portfolioProjects = [
+  ...projects,
+  {
+    id: 'kts-site',
+    title: 'KTS Official Site',
+    type: 'Web app',
+    date: '2026',
+    subtitle: 'Official website built with Next.js and TypeScript',
+    description: 'A modern, responsive official website leveraging Next.js for server-side rendering and performance.',
+    bullets: [
+      'Built a scalable architecture using Next.js app router.',
+      'Ensured type safety and robust code with TypeScript.',
+      'Designed responsive interfaces and optimized assets.',
+    ],
+    tags: ['Next.js', 'React', 'TypeScript'],
+    accent: 'violet',
+  },
+  {
     id: 'coupon-care',
     title: 'CouponCare',
     type: 'Web app',
@@ -150,77 +205,23 @@ const projects = [
     },
   },
   {
-    id: 'finote-app',
-    title: 'Finote App',
-    type: 'Mobile app',
-    date: '01 2026',
-    subtitle:
-      'An intuitive mobile companion for organizing your digital wallets and analyzing your financial health',
-    description:
-      'An intuitive mobile companion for organizing wallets and analyzing financial health through interactive charts. Built with Expo for a modern, responsive experience.',
-    bullets: [
-      'Create and manage multiple wallets to keep finances organized.',
-      'Visualize spending trends with interactive charts.',
-      'Attach receipts and sync data in real time using cloud storage.',
-      'Navigate smoothly with custom animations and modern UI.',
-    ],
-    tags: ['Expo', 'TypeScript', 'Firebase', 'Zod', 'Zustand'],
-    accent: 'violet',
-  },
-]
-
-export const portfolioProjects = [
-  ...projects,
-  {
-    id: 'next-ventures',
-    title: 'Next Ventures',
+    id: 'kaya-forgery-detection',
+    title: 'Kaya Forgery Detection',
     type: 'Web app',
-    date: '11 2025',
-    subtitle:
-      'A space for entrepreneurs to pitch ideas, explore others, and gain exposure with clean design',
-    description:
-      'A concept platform for early-stage founders to pitch, browse, and connect with other builders.',
+    date: '2026',
+    subtitle: 'AI-powered forgery detection system for images, PDFs, and source code',
+    description: 'Kaya analyzes digital files to identify tampering or fraud, offering forensic checks, confidence-based results, and professional reports.',
     bullets: [
-      'Streamlined idea submission into a guided, multi-step flow.',
-      'Designed a discovery grid with filters for sector and traction.',
-      'Built an engagement loop for comments and endorsements.',
+      'Developed an AI engine to analyze images, PDFs, and code for tampering.',
+      'Created a streamlined workflow for file uploads and automated reporting.',
+      'Delivered confidence-based scoring and forensic analysis.',
     ],
-    tags: ['Next.js', 'React', 'Sanity CMS', 'TypeScript', 'Tailwind CSS'],
+    tags: ['Python'],
     accent: 'magenta',
-  },
-  {
-    id: 'signal-desk',
-    title: 'Signal Desk',
-    type: 'Web app',
-    date: '08 2025',
-    subtitle:
-      'Operations console for monitoring deployments, incidents, and uptime in real time',
-    description:
-      'A control-room dashboard that unifies CI/CD status, alerts, and runbooks in one view.',
-    bullets: [
-      'Unified deployment, alerting, and incident views into one timeline.',
-      'Added quick actions to acknowledge incidents and open runbooks.',
-      'Designed dark-mode charts for at-a-glance status checks.',
-    ],
-    tags: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB'],
-    accent: 'violet',
-  },
-  {
-    id: 'atlas-notes',
-    title: 'Atlas Notes',
-    type: 'Web app',
-    date: '05 2025',
-    subtitle:
-      'Lightweight knowledge base for teams with fast search and structured pages',
-    description:
-      'A writing-first workspace focused on clear structure, quick search, and tidy navigation.',
-    bullets: [
-      'Built a markdown-first editor with block-based sections.',
-      'Implemented instant search with tags, folders, and filters.',
-      'Created a clean reading mode for focused documentation.',
-    ],
-    tags: ['React', 'Vite', 'Tailwind CSS', 'Markdown', 'Node.js'],
-    accent: 'magenta',
+    media: {
+      type: 'image',
+      link: 'https://kaya-forgery-detection.onrender.com',
+    },
   },
 ]
 
@@ -1307,16 +1308,38 @@ function App() {
     let cancelled = false
     const loadLeetCode = async () => {
       try {
-        const response = await fetch(`https://leetcode-api-faisalshohag.vercel.app/${leetcodeUser}`)
-        if (!response.ok) return
-        const data = await response.json()
+        let data;
+        let calendar = {};
+        let totalSolved = 0;
+        let rank = 0;
+        let ratingVal = 0;
 
-        const totalSolved = Number(data?.totalSolved || 0)
-        const rating = Number(
-          data?.contestRating || data?.contestRating?.rating || data?.rating || 0
-        )
-        const rank = Number(data?.ranking || 0)
-        const calendar = data?.submissionCalendar || {}
+        try {
+          const response = await fetch(`https://leetcode-api-faisalshohag.vercel.app/${leetcodeUser}`)
+          if (!response.ok) throw new Error('Primary API failed')
+          data = await response.json()
+          totalSolved = Number(data?.totalSolved || 0)
+          ratingVal = Number(data?.contestRating || data?.contestRating?.rating || data?.rating || 0)
+          rank = Number(data?.ranking || 0)
+          calendar = data?.submissionCalendar || {}
+          if (typeof calendar === 'string') calendar = JSON.parse(calendar)
+        } catch (error) {
+          const [profileRes, solvedRes, calendarRes] = await Promise.all([
+            fetch(`https://alfa-leetcode-api.onrender.com/${leetcodeUser}`),
+            fetch(`https://alfa-leetcode-api.onrender.com/${leetcodeUser}/solved`),
+            fetch(`https://alfa-leetcode-api.onrender.com/${leetcodeUser}/calendar`)
+          ])
+          if (!profileRes.ok || !solvedRes.ok || !calendarRes.ok) throw new Error('Fallback API failed')
+          
+          const profile = await profileRes.json()
+          const solved = await solvedRes.json()
+          const cal = await calendarRes.json()
+          
+          totalSolved = Number(solved?.solvedProblem || 0)
+          rank = Number(profile?.ranking || 0)
+          calendar = typeof cal?.submissionCalendar === 'string' ? JSON.parse(cal.submissionCalendar) : (cal?.submissionCalendar || {})
+        }
+
         const contributionMap = new Map()
         Object.entries(calendar).forEach(([timestamp, count]) => {
           const dateKey = new Date(Number(timestamp) * 1000).toISOString().slice(0, 10)
@@ -1351,7 +1374,7 @@ function App() {
         if (!cancelled) {
           setLeetcodeStats((prev) => ({
             solved: totalSolved,
-            rating: rating ? Math.round(rating) : prev.rating,
+            rating: ratingVal ? Math.round(ratingVal) : prev.rating,
             rank,
           }))
           setLeetcodeWeeks(nextWeeks)

@@ -37,14 +37,19 @@
 
 .nav-links {
   display: flex;
-.home-page #about ~ section {
-  margin-top: 32px;
-}
   align-items: center;
   gap: 24px;
   font-weight: 600;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.home-page section {
+  margin-bottom: 24px;
+}
+
+.home-page #about ~ section {
+  margin-top: 32px;
 }
 
 .nav-actions {

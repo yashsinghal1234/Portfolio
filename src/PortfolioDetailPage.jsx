@@ -115,6 +115,190 @@ const projectDetails = {
             },
         ],
     },
+    'phishshield-x': {
+        title: 'PhishShield-X',
+        type: 'Web App / Cyber Threat Framework',
+        role: 'Security Engineer',
+        built: '2026 (Ongoing)',
+        sourceUrl: 'https://github.com/yashsinghal1234/PhishShield-X',
+        summary:
+            'PhishShield-X is an adaptive multi-modal cyber threat detection framework designed to intelligently detect phishing attempts and malicious URLs.',
+        techStack: [
+            'React',
+            'FastAPI',
+            'Python',
+            'TensorFlow',
+            'Tailwind CSS'
+        ],
+        sections: [
+            {
+                title: 'Why I Built This',
+                body: [
+                    'Traditional phishing detection systems are fundamentally flawed. They rely too heavily on static blocklists, which are perpetually one step behind attackers who register new domains daily. I realized that to catch zero-day phishing attacks, a system needs to behave less like a simple filter and more like an enterprise-grade Security Operations Center (SOC).',
+                    'Attackers are also shifting tactics—moving away from just malicious links to "Quishing" (QR code phishing) and sophisticated email spoofing. I built PhishShield-X to bridge the gap between static analysis and intelligent, real-time threat detection across multiple vectors.',
+                    'The goal was to create a Defense-in-Depth pipeline that doesn’t just output a blind score, but interrogates the threat from multiple angles—structural, lexical, and behavioral—to provide Explainable AI (XAI) insights.'
+                ],
+            },
+            {
+                title: 'How It Works (The Defense-in-Depth Pipeline)',
+                body: [
+                    'When a URL or QR code is submitted to PhishShield-X, it goes through a multi-layered interrogation process in milliseconds. The system uses a Three-Tier Risk Classification to balance strict security with false-positive prevention.'
+                ],
+                bullets: [
+                    'The Bouncer (Whitelist): Checks the domain against the top 100,000 safest global websites to ensure blazing-fast performance on legitimate traffic.',
+                    'The Brain (Deep Learning): A custom-trained 1D Convolutional Neural Network (CNN) analyzes the URL string’s character entropy and structural patterns to identify obfuscation.',
+                    'The Detectives (Live APIs): Queries VirusTotal and Google Safe Browsing across 70+ global security vendors in real-time.',
+                    'Live Heuristics & Interrogation: Performs WHOIS domain age checks, Typosquatting/Homograph analysis, and active SSL/TLS querying.',
+                    'The QR Decoder: Uses OpenCV to analyze QR module density and error correction levels, while unrolling hidden URLs via active HEAD requests.',
+                    'Email Fraud Engine: Parses raw .eml headers to validate SPF/DKIM/DMARC and detect Return-Path impersonation.'
+                ],
+            },
+            {
+                title: 'Key Decisions & Challenges',
+                body: [
+                    'One of the hardest problems was dealing with conflicting evidence. What happens if the Deep Learning model is 95% confident a URL is phishing, but Google Safe Browsing says it is clean? To solve this, I engineered an Override Logic system.',
+                    'The system weighs live API data against heuristic and ML scores, gracefully downgrading uncertain threats to a "Suspicious (41% - 74%)" warning rather than a hard block.',
+                    'Another major hurdle was defeating QR code obfuscation. Attackers often use high Error Correction Levels (ECL) to embed fake bank logos inside QR codes, combined with obscure URL shorteners. I solved this by implementing a Multimodal Fusion Engine that analyzes both the visual structure of the matrix and actively unrolls the lexical payload.'
+                ],
+            },
+            {
+                title: 'What I Learned',
+                body: [
+                    'Building PhishShield-X taught me that cybersecurity engineering is as much about orchestration as it is about algorithms. Integrating a Deep Learning model with live network requests (like WHOIS and SSL handshakes) in a highly concurrent FastAPI backend completely changed how I think about system architecture and latency optimization.'
+                ],
+            },
+        ],
+    },
+    'sanrachna': {
+        title: 'Sanrachna',
+        type: 'Web App',
+        role: 'Full-stack Developer',
+        built: '2026',
+        visitUrl: 'https://sanrachna-final.vercel.app',
+        sourceUrl: 'https://github.com/yashsinghal1234/sanrachna_final',
+        summary:
+            'An AI-enabled construction management ecosystem for planning, workforce coordination, issue tracking, and predictive analytics.',
+        techStack: [
+            'React',
+            'Node.js',
+            'TypeScript',
+            'FastAPI',
+            'MongoDB'
+        ],
+        sections: [
+            {
+                title: 'Why I Built This',
+                body: [
+                    '"Sanrachna" translates to structure, architecture, and intelligent construction systems. I built this platform because I noticed a massive operational gap in the construction industry: projects are incredibly complex, yet teams often rely on fragmented communication, manual clipboard reporting, and disconnected tools.',
+                    'When site engineers, supervisors, and project owners aren’t looking at the same real-time data, it leads to delayed decision-making, blown budgets, and safety hazards.',
+                    'I wanted to create a unified ecosystem that doesn’t just act as a digital filing cabinet, but actively assists the team using AI to predict bottlenecks and streamline workflows.'
+                ],
+            },
+            {
+                title: 'How It Works',
+                body: [
+                    'Sanrachna serves as the central nervous system for a construction site. It offers role-based dashboards that adapt to whether the user is a field worker submitting a daily log or a project owner monitoring the overall burn rate.'
+                ],
+                bullets: [
+                    'AI Planning Studio: Generates complete project execution plans, breaking down milestones and assisting with resource allocation.',
+                    'Real-Time Dashboard: Tracks live project health, timeline progress, and cost burn-rate analytics.',
+                    'Smart Task Management: Role-based assignments with lifecycle monitoring for field teams.',
+                    'Daily Progress Logs: Allows workers to submit structured on-site reports for engineering approval.',
+                    'Safety & Emergency Management: Features severity-based emergency classification and an audit trail for incident reporting.'
+                ],
+            },
+            {
+                title: 'Key Decisions & Challenges',
+                body: [
+                    'A major engineering challenge was designing a robust state architecture that could handle offline-first scenarios or spotty network connections typically found on active construction sites. Ensuring that daily progress logs and safety incidents sync reliably when the connection is restored was critical.',
+                    'Integrating the AI Copilot via a FastAPI microservice allowed me to separate the heavy machine learning tasks (like schedule optimization and cost prediction) from the core Node.js transactional backend. This prevented the main API from blocking during intense AI generation tasks.'
+                ],
+            },
+        ],
+    },
+    'kaya-forgery-detection': {
+        title: 'Kaya Forgery Detection',
+        type: 'Web App',
+        role: 'AI Developer',
+        built: '2026',
+        visitUrl: 'https://kaya-forgery-detection.onrender.com',
+        sourceUrl: 'https://github.com/yashsinghal1234/Kaya-Forgery_Detection',
+        summary:
+            'Kaya is an AI-powered forgery detection system that analyzes images, PDFs, and source code to identify tampering or fraud.',
+        techStack: [
+            'Python',
+            'Machine Learning'
+        ],
+        sections: [
+            {
+                title: 'Why I Built This',
+                body: [
+                    'With the rapid proliferation of Generative AI (LLMs) and advanced image manipulation tools, the digital world is facing a crisis of authenticity. It has become trivially easy to forge documents, manipulate images, or generate thousands of lines of synthetic source code.',
+                    'I built Kaya to act as a digital forensic investigator. The goal was to provide a tool that doesn’t just say "this is fake," but provides a confidence-based forensic report analyzing exactly where and how a file was manipulated.'
+                ],
+            },
+            {
+                title: 'How It Works',
+                body: [
+                    'Kaya provides a streamlined workflow where users upload a suspicious file (an image, a PDF, or a code snippet). The backend routes the file to the appropriate forensic engine.'
+                ],
+                bullets: [
+                    'AI Code Detection: Trained on datasets like the AIGCodeSet from Hugging Face to identify subtle statistical markers and token distributions unique to LLM-generated code.',
+                    'Image Forensics: Analyzes pixel-level compression artifacts and metadata inconsistencies to detect splicing or manipulation.',
+                    'PDF Tampering: Inspects the internal structure of PDFs to identify unauthorized modifications to text or signatures.',
+                    'Reporting: Generates downloadable, professional forensic reports detailing confidence scores and analysis vectors.'
+                ],
+            },
+            {
+                title: 'What I Learned',
+                body: [
+                    'Training the code detector taught me the nuances of natural language processing applied to formal programming languages. I learned how to manage large-scale datasets, handle tokenization for code, and deal with the high variance between human-written and machine-generated syntax.'
+                ],
+            },
+        ],
+    },
+    'kts-site': {
+        title: 'KTS Official Site',
+        type: 'Web App',
+        role: 'Frontend Engineer',
+        built: '2026',
+        sourceUrl: 'https://github.com/yashsinghal1234/kts_site',
+        summary:
+            'A modern, responsive official website leveraging Next.js for server-side rendering and performance.',
+        techStack: [
+            'Next.js',
+            'React',
+            'TypeScript',
+            'Tailwind CSS'
+        ],
+        sections: [
+            {
+                title: 'Why I Built This',
+                body: [
+                    'Corporate and official websites often suffer from bloat, slow time-to-interactive (TTI), and poor SEO because they rely on heavy client-side rendering or outdated CMS platforms.',
+                    'I built the KTS Official Site to deliver a premium, lightning-fast user experience that respects modern web vitals while providing a highly maintainable codebase for the engineering team.'
+                ],
+            },
+            {
+                title: 'How It Works',
+                body: [
+                    'The site is built on the Next.js App Router paradigm, heavily utilizing React Server Components (RSC) to ship zero-javascript HTML to the client wherever possible.'
+                ],
+                bullets: [
+                    'Server-Side Rendering (SSR) and Static Site Generation (SSG) for instantaneous page loads.',
+                    'Strict TypeScript adoption across the entire component tree to eliminate runtime type errors.',
+                    'Tailwind CSS for a highly cohesive and responsive design system that adapts fluidly to any device viewport.',
+                    'Optimized asset loading using next/font (Geist) and next/image to prevent layout shifts (CLS).'
+                ],
+            },
+            {
+                title: 'Key Decisions & What I Learned',
+                body: [
+                    'One of the best decisions was moving away from traditional global stylesheets and embracing utility-first CSS. This prevented the styling from degrading as the site grew. Additionally, working deeply with the Next.js App Router solidified my understanding of server vs. client boundaries, data fetching strategies, and how to properly cache aggressive edge routes.'
+                ],
+            },
+        ],
+    },
 }
 
 function PortfolioDetailPage() {

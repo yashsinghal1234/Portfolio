@@ -323,16 +323,38 @@ function AboutPage() {
     let cancelled = false
     const loadLeetCode = async () => {
       try {
-        const response = await fetch(`https://leetcode-api-faisalshohag.vercel.app/${leetcodeUser}`)
-        if (!response.ok) return
-        const data = await response.json()
+        let data;
+        let calendar = {};
+        let totalSolved = 0;
+        let rank = 0;
+        let ratingVal = 0;
 
-        const totalSolved = Number(data?.totalSolved || 0)
-        const rating = Number(
-          data?.contestRating || data?.contestRating?.rating || data?.rating || 0
-        )
-        const rank = Number(data?.ranking || 0)
-        const calendar = data?.submissionCalendar || {}
+        try {
+          const response = await fetch(`https://leetcode-api-faisalshohag.vercel.app/${leetcodeUser}`)
+          if (!response.ok) throw new Error('Primary API failed')
+          data = await response.json()
+          totalSolved = Number(data?.totalSolved || 0)
+          ratingVal = Number(data?.contestRating || data?.contestRating?.rating || data?.rating || 0)
+          rank = Number(data?.ranking || 0)
+          calendar = data?.submissionCalendar || {}
+          if (typeof calendar === 'string') calendar = JSON.parse(calendar)
+        } catch (error) {
+          const [profileRes, solvedRes, calendarRes] = await Promise.all([
+            fetch(`https://alfa-leetcode-api.onrender.com/${leetcodeUser}`),
+            fetch(`https://alfa-leetcode-api.onrender.com/${leetcodeUser}/solved`),
+            fetch(`https://alfa-leetcode-api.onrender.com/${leetcodeUser}/calendar`)
+          ])
+          if (!profileRes.ok || !solvedRes.ok || !calendarRes.ok) throw new Error('Fallback API failed')
+          
+          const profile = await profileRes.json()
+          const solved = await solvedRes.json()
+          const cal = await calendarRes.json()
+          
+          totalSolved = Number(solved?.solvedProblem || 0)
+          rank = Number(profile?.ranking || 0)
+          calendar = typeof cal?.submissionCalendar === 'string' ? JSON.parse(cal.submissionCalendar) : (cal?.submissionCalendar || {})
+        }
+
         const contributionMap = new Map()
         Object.entries(calendar).forEach(([timestamp, count]) => {
           const dateKey = new Date(Number(timestamp) * 1000).toISOString().slice(0, 10)
@@ -367,7 +389,7 @@ function AboutPage() {
         if (!cancelled) {
           setLeetcodeStats((prev) => ({
             solved: totalSolved,
-            rating: rating ? Math.round(rating) : prev.rating,
+            rating: ratingVal ? Math.round(ratingVal) : prev.rating,
             rank,
           }))
           setLeetcodeWeeks(nextWeeks)
