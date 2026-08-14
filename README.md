@@ -20,6 +20,9 @@ Visit the printed local URL to view the page.
 - Curated work with scrolling cards and sticky details
 - Interactive globe for time zone selection
 - About section with profile image and social links
+- Comprehensive project details pages with in-depth case studies
+- Interactive Contact Dialog with integrated messaging form and social links
+- Global Search overlay for quick site-wide navigation
 
 ## Production Build
 
