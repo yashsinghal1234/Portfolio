@@ -299,6 +299,172 @@ const projectDetails = {
             },
         ],
     },
+    'medisage': {
+        title: 'MediSage',
+        type: 'Web App / Clinical AI Platform',
+        role: 'Full-Stack Engineer',
+        built: '2026 (Ongoing)',
+        sourceUrl: 'https://github.com/yashsinghal1234/medisage',
+        summary:
+            'MediSage is an enterprise-grade, sovereign medical document management and AI health intelligence ecosystem that ingests prescriptions, lab PDFs, and radiology reports — binding every biomarker to its pixel-level source with zero hallucination, HL7® FHIR® R4 export, and real-time pharmacovigilance.',
+        techStack: [
+            'React 19',
+            'Vite',
+            'Tailwind CSS',
+            'Node.js',
+            'Express',
+            'MongoDB',
+        ],
+        sections: [
+            {
+                title: 'Why I Built This',
+                body: [
+                    'Modern medical management is plagued by fragmented paper prescriptions, disconnected lab PDFs, and disjointed hospital portals. Patients lose critical clinical context between encounters, and attending physicians have no single source of truth for a patient\'s longitudinal health history.',
+                    'The insight that triggered MediSage was simple but alarming: AI systems that "read" medical documents can hallucinate values. A system that confidently extracts a cholesterol reading of 180 mg/dL from a document that actually says 280 mg/dL is not just wrong — it is dangerous.',
+                    'MediSage was built to be the antithesis of that. Every extracted data point must be provably linked to its physical origin on the source document. I wanted to build something that a physician could actually trust.',
+                ],
+            },
+            {
+                title: 'How It Works (The Clinical Intelligence Pipeline)',
+                body: [
+                    'MediSage processes any clinical artifact — prescriptions, comprehensive metabolic panels, lipid audits, radiology summaries — through a multi-stage intelligence pipeline.',
+                ],
+                bullets: [
+                    'Deterministic Pixel Provenance: Every extracted biomarker (HbA1c, LDL-C, eGFR) is bound to its exact bounding-box coordinates on the source PDF, with a SHA-256 cryptographic provenance hash for verification.',
+                    'Autonomous OCR & Entity Extraction: Multi-format ingestion (PDF, JPEG, PNG, JSON, HL7) with >98.5% precision on lab biomarkers, auto-categorizing documents as Prescriptions, Lab Reports, Radiology Scans, or Discharge Summaries.',
+                    'Pharmacodynamic Safety Guard: Cross-references active medications against CYP450 enzyme pathways, SIDER adverse drug reactions, and patient allergies — alerting on dangerous interactions like Grapefruit juice inhibiting CYP3A4 or concurrent NSAID/ARB antagonism.',
+                    'HL7® FHIR® R4 Export: Generates hospital-interoperable Bundle documents with LOINC, RxNorm, and SNOMED CT codes, conforming to the ONC 21st Century Cures Act.',
+                    'Emergency QR Pass (I.C.E.): Scannable, offline-capable triage pass with blood group, contraindications, and emergency contacts formatted for first responders.',
+                    'AI Clinical Companion: Powered by LangChain with rule-based botanical and nutritional fallback heuristics for zero-failure health synthesis.',
+                ],
+            },
+            {
+                title: 'Key Decisions & Challenges',
+                body: [
+                    'The hardest engineering challenge was the Provenance Inspector itself. Traditional OCR pipelines discard spatial metadata after text extraction. I had to implement a custom bounding-box extraction layer that preserves (top, left, width, height) coordinates for every token, then build a split-screen canvas UI to draw verification overlays on the original document image.',
+                    'Instead of routing all queries through a live LLM API (latency, cost, hallucination risk), I built a tiered fallback: a LangChain + OpenAI agent is used when available, but a deterministic rule-based heuristic engine handles all drug interaction checks if the API is unavailable. Clinical safety cannot depend on an external API being up.',
+                    'Designing the FHIR R4 bundle schema required deep reading of the ONC US-Core Implementation Guide. Mapping free-text biomarker labels from scanned PDFs to universal LOINC codes (e.g., "Glycated Hemoglobin" → LOINC 17856-6) required building a curated normalization dictionary.',
+                ],
+            },
+            {
+                title: 'What I Learned',
+                body: [
+                    'Building MediSage fundamentally changed how I think about AI reliability in high-stakes domains. In most web apps, a bug means a broken UI. In a clinical context, a bug means wrong information reaching a patient or physician.',
+                    'Trustworthy AI systems need cryptographic audit trails, not just accuracy metrics. I also gained deep experience with clinical data standards — LOINC, SNOMED CT, RxNorm, and HL7 FHIR — that are rarely taught outside health informatics programs. Most importantly, I learned how to architect a system where every feature has a defined failure mode and a safe fallback.',
+                ],
+            },
+        ],
+    },
+    'geosentinel': {
+        title: 'GeoSentinel',
+        type: 'IoT + Web App / Geotechnical Platform',
+        role: 'Full-Stack & IoT Engineer',
+        built: '2026 (SIH)',
+        sourceUrl: 'https://github.com/yashsinghal1234/Geosentinel',
+        summary:
+            'GeoSentinel is an end-to-end mine subsidence early-warning and geotechnical monitoring system built for the Ministry of Coal & DGMS, combining autonomous LoRa surface-mesh sensor nodes, a Knothe Time-Dependent physics engine, and role-based GIS dashboards.',
+        techStack: [
+            'React 19',
+            'TypeScript',
+            'Vite',
+            'Tailwind CSS',
+            'Node.js',
+            'Express',
+            'MongoDB',
+        ],
+        sections: [
+            {
+                title: 'Why I Built This',
+                body: [
+                    'Underground mining and opencast excavation trigger progressive subsurface void collapse, strata deformation, and catastrophic slope failures. Conventional monitoring — satellite InSAR surveys, periodic total station checks — suffers from high latency (days to weeks), cloud cover obstruction, prohibitive costs, and complete dependency on cellular internet.',
+                    'I built GeoSentinel for Smart India Hackathon 2026, targeting a problem brief from the Ministry of Coal. The core design principle was non-negotiable: the system must operate with zero internet dependency. If a slope is about to fail during a monsoon, there is no time to wait for a satellite pass. A 110 dB acoustic siren must fire within seconds, not hours.',
+                ],
+            },
+            {
+                title: 'How It Works (Physics Engine & Sensor Mesh)',
+                body: [
+                    'GeoSentinel operates at three layers simultaneously: edge sensor nodes in the field, a fail-safe gateway running offline, and a cloud dashboard for DGMS engineers and village populations.',
+                ],
+                bullets: [
+                    'Autonomous LoRa Mesh: ESP32-S3 sensor nodes measure 3-axis tilt (MPU-6050 + Kalman filter), vibration, and volumetric water content every 10 seconds, transmitting over 868 MHz LoRa with -148 dBm sensitivity.',
+                    'Fail-Safe Edge Gateway: Raspberry Pi CM4 with 8-channel LoRaWAN concentrator, 21-day solar battery autonomy, SIM800L GSM for SMS alerts, and a 110 dB relay siren — 100% offline capable.',
+                    'Knothe Gaussian Subsidence Model: Real-time calculation of S(x) = Smax · exp(−π·x²/R²), computing trough subsidence and radius of principal influence governed by overburden depth and angle of draw.',
+                    'Monsoon Piezometric Factor (Ψ): Dynamically multiplies shear rate by pore-water pressure during rainfall, providing up to 4.2 hours of additional warning lead time before visual ground rupture.',
+                    'AI-Corroborated Citizen Triage: Crowdsourced crack reports with computer vision aperture measurement, cross-referenced against subterranean sensor telemetry for false-positive reduction.',
+                    'Multilingual Public Safety Board: English, Hindi, Bengali, Odia, and Santhali interfaces for village populations with real-time alert levels and shelter check-in.',
+                ],
+            },
+            {
+                title: 'Key Decisions & Challenges',
+                body: [
+                    'The most difficult challenge was architecting for internet-zero operation without sacrificing real-time data quality. Every alert decision had to be made on the edge gateway itself, with no cloud round-trip. I implemented a local physics engine on the Raspberry Pi CM4 that runs the Knothe subsidence model in real time, triggering the siren relay via GPIO the moment a threshold is breached.',
+                    'Distinguishing genuine subsidence from sensor noise was another critical problem. A vibration spike from a passing truck should not trigger an evacuation. I implemented a multi-node corroboration rule: a Stage 5 Critical alert only fires when three or more nodes in the same topographic zone simultaneously exceed their tilt rate thresholds, cross-referenced against the monsoon rainfall rate.',
+                    'The frontend GIS heatmap required rendering real-time subsidence intensity across irregular terrain without a commercial map API. I built a custom HTML5 Canvas 2D / WebGL renderer that plots node risk indices as a Gaussian-interpolated color field, updating sub-second via WebSocket push.',
+                ],
+            },
+            {
+                title: 'What I Learned',
+                body: [
+                    'GeoSentinel taught me that safety-critical systems demand a completely different engineering mindset. Every component needs a defined failure mode and a fallback. If the LoRa radio fails, the node logs to onboard flash. If the internet is down, the gateway sends SMS. If GSM fails, the acoustic siren fires based on local sensor data alone.',
+                    'I also gained deep experience in geotechnical physics — translating CIMFR Knothe model equations into real-time numerical computation required reading academic literature and adapting it for embedded constraints. Working within the SIH framework sharpened my ability to scope, prototype, and pitch complex engineering systems under time pressure.',
+                ],
+            },
+        ],
+    },
+    'aptix': {
+        title: 'Aptix',
+        type: 'Web App / Assessment Platform',
+        role: 'Full-Stack Engineer',
+        built: '2026',
+        sourceUrl: 'https://github.com/yashsinghal1234/Aptix',
+        summary:
+            'Aptix is a serverless-native digital assessment platform engineered for absolute fairness and zero data loss, supporting 500–1000+ concurrent students with in-memory caching, debounced progressive autosave, dual-layer crash recovery, and ironclad anti-cheating proctoring.',
+        techStack: [
+            'Next.js',
+            'React',
+            'Node.js',
+            'JWT',
+        ],
+        sections: [
+            {
+                title: 'Why I Built This',
+                body: [
+                    'Most online exam platforms fail in one of two ways: they can\'t handle the thundering-herd load when 1,000 students click "Start" simultaneously, or they lose student progress when a browser crashes mid-exam. Both are unacceptable. An exam is a high-stakes, high-stress event for every student involved.',
+                    'I also noticed that most proctoring systems are either too permissive (easy to cheat) or too aggressive (flagging innocent students for normal behavior). I wanted to build something that enforces strict fairness through technical means — server-synchronized timers, correct-answer obfuscation, and behavioral telemetry — rather than invasive camera monitoring.',
+                ],
+            },
+            {
+                title: 'How It Works (The Concurrency & Fairness Engine)',
+                body: [
+                    'Aptix is designed around three core engineering guarantees: no data loss, no cheating, and no performance degradation at scale. Each guarantee requires its own architecture.',
+                ],
+                bullets: [
+                    'In-Memory Question Cache: On first load, the full question set is cached in server memory. Concurrent starts read from cache, eliminating the thundering-herd database read spike when 1,000 students start simultaneously.',
+                    'Progressive Autosave with Offline Buffer: Answers are debounced (300ms) and streamed to the database continuously. Every keystroke is simultaneously written to localStorage — so if the network drops, nothing is lost.',
+                    'Dual-Layer Crash Recovery: On reconnect, the system reconciles database state with the localStorage buffer, restoring all answers, visit states, and the active question position exactly as left.',
+                    'NTP-Synced Timer: Exam countdowns are calibrated against server time on load and re-synchronized every 60 seconds, making local clock manipulation completely ineffective.',
+                    'Fullscreen Lockdown & Tab Detection: The browser is forced into fullscreen mode, and tab switches are logged with a violation counter. Reaching the configured max triggers automatic submission.',
+                    'Payload Answer Obfuscation: Correct answers and explanations are stripped from all API responses until official submission, making browser devtools inspection useless for cheating.',
+                    'GitHub Actions Cron Sweeper: A scheduled workflow pings the deployment every 5 minutes to auto-submit any abandoned or crashed exams past their deadline.',
+                ],
+            },
+            {
+                title: 'Key Decisions & Challenges',
+                body: [
+                    'The hardest problem was the cache invalidation strategy. The in-memory question cache dramatically improves start-time performance, but introduces a consistency risk: if a teacher edits a question after the cache is warm, students see stale data. I solved this with a cache-busting mechanism tied to the exam\'s updatedAt timestamp.',
+                    'The serverless deployment on Vercel introduced a subtle but critical problem: serverless functions are stateless and can be re-instantiated between requests, meaning the in-memory cache could be cold for any given invocation. I solved this by combining Vercel edge caching with a Neon Serverless PostgreSQL connection pool optimized for rapid cold-start connections.',
+                    'Designing the anti-cheating system required careful thought about false positives. A student whose laptop battery dies should not be penalized the same as one who switches tabs 15 times. I implemented a graduated response: the first three tab switches show a warning, subsequent ones increment a violation counter, and only reaching the hard limit triggers auto-submit.',
+                ],
+            },
+            {
+                title: 'What I Learned',
+                body: [
+                    'Aptix taught me that high-concurrency systems require thinking about failure at every layer simultaneously. The database, the cache, the client, the network — any one can fail at any time, and the system needs a defined behavior for each failure mode.',
+                    'I also learned the real cost of serverless architecture. The cold-start problem is not theoretical — in a platform where a student\'s first request might be their exam starting, a 2-second cold start is a material UX failure. Solving that with connection pooling and edge caching was one of the more satisfying engineering challenges of this project.',
+                ],
+            },
+        ],
+    },
 }
 
 function PortfolioDetailPage() {

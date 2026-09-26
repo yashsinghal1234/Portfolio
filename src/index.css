@@ -163,8 +163,12 @@ body::before {
   select,
   label,
   video {
-    cursor: none;
+    cursor: auto;
   }
+}
+
+.custom-cursor {
+  display: none !important;
 }
 
 @media (pointer: coarse) {
