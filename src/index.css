@@ -154,17 +154,34 @@ body::before {
   }
 }
 
-@media (pointer: fine) {
-  body,
-  a,
-  button,
-  input,
-  textarea,
-  select,
-  label,
-  video {
-    cursor: auto;
-  }
+body {
+  cursor: default;
+}
+
+/* Finger cursor on all interactive and clickable elements */
+a,
+button,
+[role="button"],
+[role="link"],
+[role="tab"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+select,
+label,
+summary,
+.project-card,
+.project-link,
+.portfolio-card,
+.portfolio-item a,
+[data-cursor],
+[data-cursor="view-details"],
+.work-cta,
+.rainbow-btn,
+.clickable {
+  cursor: pointer;
 }
 
 .custom-cursor {
