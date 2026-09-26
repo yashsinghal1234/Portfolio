@@ -72,14 +72,6 @@
   position: relative;
   z-index: 1;
 }
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    background: rgba(8, 10, 18, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #e6eefb;
 
 .detail-hero-text h1 {
   margin: 0;

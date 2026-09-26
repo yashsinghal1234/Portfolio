@@ -8,12 +8,14 @@ import {
     portfolioProjects,
     useEscapeClose,
 } from './App.jsx'
+import { useProjects } from './useProjects'
 import './PortfolioPage.css'
 import resumePdf from '../data/resume.pdf'
 
 const tagIconMap = {
     'Next.js': 'https://cdn.simpleicons.org/nextdotjs/FFFFFF',
     React: 'https://cdn.simpleicons.org/react/61DAFB',
+    'React 19': 'https://cdn.simpleicons.org/react/61DAFB',
     'Tailwind CSS': 'https://cdn.simpleicons.org/tailwindcss/38BDF8',
     TypeScript: 'https://cdn.simpleicons.org/typescript/3178C6',
     Expo: 'https://cdn.simpleicons.org/expo/FFFFFF',
@@ -27,9 +29,17 @@ const tagIconMap = {
     Vite: 'https://cdn.simpleicons.org/vite/646CFF',
     'Sanity CMS': 'https://cdn.simpleicons.org/sanity/F03E2F',
     Markdown: 'https://cdn.simpleicons.org/markdown/FFFFFF',
+    PostgreSQL: 'https://cdn.simpleicons.org/postgresql/4169E1',
+    Vercel: 'https://cdn.simpleicons.org/vercel/FFFFFF',
+    'GitHub Actions': 'https://cdn.simpleicons.org/githubactions/2088FF',
+    OpenAI: 'https://cdn.simpleicons.org/openai/FFFFFF',
+    Python: 'https://cdn.simpleicons.org/python/3776AB',
+    FastAPI: 'https://cdn.simpleicons.org/fastapi/009688',
 }
 
 function PortfolioPage() {
+    const { projects: fetchedProjects } = useProjects()
+    const displayProjects = fetchedProjects && fetchedProjects.length > 0 ? fetchedProjects : portfolioProjects
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [isContactOpen, setIsContactOpen] = useState(false)
     const [searchQuery, setSearchQuery] = useState('')
@@ -189,7 +199,7 @@ function PortfolioPage() {
             </header>
 
             <section className="portfolio-timeline" id="projects" aria-label="Projects">
-                {portfolioProjects.map((project, index) => {
+                {displayProjects.map((project, index) => {
                     const indexLabel = String(index + 1).padStart(2, '0')
                     const typeLabel = project.type ?? 'Project'
                     const dateLabel = project.date ?? '2026'

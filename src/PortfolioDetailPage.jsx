@@ -9,12 +9,14 @@ import {
     portfolioProjects,
     useEscapeClose,
 } from './App.jsx'
+import { useProjects } from './useProjects'
 import './PortfolioDetailPage.css'
 import resumePdf from '../data/resume.pdf'
 
 const tagIconMap = {
     'Next.js': 'https://cdn.simpleicons.org/nextdotjs/FFFFFF',
     React: 'https://cdn.simpleicons.org/react/61DAFB',
+    'React 19': 'https://cdn.simpleicons.org/react/61DAFB',
     'Tailwind CSS': 'https://cdn.simpleicons.org/tailwindcss/38BDF8',
     TypeScript: 'https://cdn.simpleicons.org/typescript/3178C6',
     Expo: 'https://cdn.simpleicons.org/expo/FFFFFF',
@@ -28,6 +30,12 @@ const tagIconMap = {
     JWT: 'https://cdn.simpleicons.org/jsonwebtokens/FFFFFF',
     Docker: 'https://cdn.simpleicons.org/docker/2496ED',
     Vite: 'https://cdn.simpleicons.org/vite/646CFF',
+    PostgreSQL: 'https://cdn.simpleicons.org/postgresql/4169E1',
+    Vercel: 'https://cdn.simpleicons.org/vercel/FFFFFF',
+    'GitHub Actions': 'https://cdn.simpleicons.org/githubactions/2088FF',
+    OpenAI: 'https://cdn.simpleicons.org/openai/FFFFFF',
+    Python: 'https://cdn.simpleicons.org/python/3776AB',
+    FastAPI: 'https://cdn.simpleicons.org/fastapi/009688',
 }
 
 const projectDetails = {
@@ -483,9 +491,12 @@ function PortfolioDetailPage() {
 
     const filteredGroups = getFilteredGroups(searchQuery)
 
+    const { allProjects } = useProjects()
+    const currentList = allProjects && allProjects.length > 0 ? allProjects : portfolioProjects
+
     const project = useMemo(
-        () => portfolioProjects.find((item) => item.id === projectId),
-        [projectId]
+        () => currentList.find((item) => item.id === projectId) || portfolioProjects.find((item) => item.id === projectId),
+        [currentList, projectId]
     )
 
     const detail = projectDetails[projectId]
@@ -519,9 +530,9 @@ function PortfolioDetailPage() {
     const heroVideo = project.media?.type === 'video' ? project.media.src : null
     const visitUrl = detail?.visitUrl ?? project.media?.link
     const sourceUrl = detail?.sourceUrl
-    const projectIndex = portfolioProjects.findIndex((item) => item.id === projectId)
+    const projectIndex = currentList.findIndex((item) => item.id === projectId)
     const nextProject = projectIndex >= 0
-        ? portfolioProjects[(projectIndex + 1) % portfolioProjects.length]
+        ? currentList[(projectIndex + 1) % currentList.length]
         : null
 
     return (

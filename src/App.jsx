@@ -127,6 +127,63 @@ const globeArcs = [
 
 const projects = [
   {
+    id: 'medisage',
+    title: 'MediSage',
+    type: 'Web app',
+    date: '2026',
+    subtitle: 'Clinical Document Intelligence & Sovereign Health Vault',
+    description:
+      'An enterprise-grade medical document management and AI health intelligence ecosystem that ingests prescriptions, lab PDFs, and radiology reports — binding every biomarker to its pixel-level source with zero hallucination, HL7® FHIR® R4 export, and real-time pharmacovigilance.',
+    bullets: [
+      'Built a deterministic Pixel Provenance Viewer linking each biomarker to its exact bounding-box coordinates on the source PDF via SHA-256 cryptographic hashes.',
+      'Implemented a pharmacodynamic Drug-Drug & Allergy Safety Guard cross-referencing CYP450 pathways, SIDER ADRs, and patient allergy records.',
+      'Generated HL7® FHIR® R4 bundles (Patient, Observation, MedicationStatement, AllergyIntolerance) with LOINC, RxNorm, and SNOMED CT codes for full hospital interoperability.',
+    ],
+    tags: ['React 19', 'Vite', 'Tailwind CSS', 'Node.js', 'Express', 'MongoDB', 'LangChain', 'OpenAI', 'FHIR R4'],
+    accent: 'green',
+    githubUrl: 'https://github.com/yashsinghal1234/medisage',
+    liveUrl: '',
+    visible: true,
+  },
+  {
+    id: 'geosentinel',
+    title: 'GeoSentinel',
+    type: 'IoT + Web app',
+    date: '2026',
+    subtitle: 'Real-Time Mine Subsidence & Geological Early Warning System',
+    description:
+      'An end-to-end geotechnical monitoring and early-warning platform built for the Ministry of Coal & DGMS, combining autonomous LoRa surface-mesh sensor nodes, a Knothe Time-Dependent physics engine, and role-based GIS dashboards for operators and village communities.',
+    bullets: [
+      'Designed a fail-safe edge gateway with 100% offline operation, 21-day solar autonomy, 110 dB acoustic sirens, and direct GSM SMS alerts without internet dependency.',
+      'Implemented the CIMFR Knothe Gaussian Subsidence model with a dynamic monsoon piezometric factor (Ψ) providing up to 4.2-hour earlier warning before visual ground rupture.',
+      'Delivered multilingual (English, Hindi, Bengali, Odia, Santhali) public safety dashboards with crowdsourced crack reports and real-time WebSocket telemetry.',
+    ],
+    tags: ['React 19', 'TypeScript', 'Vite', 'Tailwind CSS', 'Node.js', 'Express', 'MongoDB', 'WebSockets', 'Canvas 2D/WebGL'],
+    accent: 'amber',
+    githubUrl: 'https://github.com/yashsinghal1234/Geosentinel',
+    liveUrl: '',
+    visible: true,
+  },
+  {
+    id: 'aptix',
+    title: 'Aptix',
+    type: 'Web app',
+    date: '2026',
+    subtitle: 'High-Concurrency Secure Examination & Assessment Platform',
+    description:
+      'A serverless-native digital assessment platform engineered for absolute fairness and zero data loss, supporting 500–1000+ concurrent students with in-memory caching, debounced progressive autosave, dual-layer crash recovery, and ironclad anti-cheating proctoring.',
+    bullets: [
+      'Eliminated thundering-herd database spikes via an in-memory question-set cache layer, enabling 1,000 simultaneous exam starts without performance degradation.',
+      'Built zero-data-loss crash recovery restoring all answers, visit states, and question positions on reconnect, backed by an automated GitHub Actions cron sweeper for abandoned sessions.',
+      'Implemented NTP-synced timer, fullscreen lockdown, tab-switch detection with auto-submit, and payload answer obfuscation to prevent client-side cheating.',
+    ],
+    tags: ['Next.js', 'React', 'Node.js', 'PostgreSQL', 'Neon', 'Vercel', 'JWT', 'GitHub Actions'],
+    accent: 'cyan',
+    githubUrl: 'https://github.com/yashsinghal1234/Aptix',
+    liveUrl: '',
+    visible: true,
+  },
+  {
     id: 'phishshield-x',
     title: 'PhishShield-X',
     type: 'Web app',

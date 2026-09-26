@@ -3223,6 +3223,26 @@ h1 {
   background: linear-gradient(135deg, #7426ff, #9d4bff);
 }
 
+.project-card.green {
+  background: linear-gradient(135deg, #059669, #10b981);
+}
+
+.project-card.amber {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+
+.project-card.cyan {
+  background: linear-gradient(135deg, #0284c7, #06b6d4);
+}
+
+.project-card.teal {
+  background: linear-gradient(135deg, #0f766e, #14b8a6);
+}
+
+.project-card.magenta {
+  background: linear-gradient(135deg, #c026d3, #e879f9);
+}
+
 .project-heading {
   display: flex;
   justify-content: space-between;

@@ -1,0 +1,159 @@
+[
+  {
+    "id": "medisage",
+    "title": "MediSage",
+    "type": "Web app",
+    "date": "2026",
+    "subtitle": "Clinical Document Intelligence & Sovereign Health Vault",
+    "description": "An enterprise-grade medical document management and AI health intelligence ecosystem that ingests prescriptions, lab PDFs, and radiology reports — binding every biomarker to its pixel-level source with zero hallucination, HL7® FHIR® R4 export, and real-time pharmacovigilance.",
+    "bullets": [
+      "Built a deterministic Pixel Provenance Viewer linking each biomarker to its exact bounding-box coordinates on the source PDF via SHA-256 cryptographic hashes.",
+      "Implemented a pharmacodynamic Drug-Drug & Allergy Safety Guard cross-referencing CYP450 pathways, SIDER ADRs, and patient allergy records.",
+      "Generated HL7® FHIR® R4 bundles (Patient, Observation, MedicationStatement, AllergyIntolerance) with LOINC, RxNorm, and SNOMED CT codes for full hospital interoperability."
+    ],
+    "tags": ["React 19", "Vite", "Tailwind CSS", "Node.js", "Express", "MongoDB", "LangChain", "OpenAI", "FHIR R4"],
+    "accent": "green",
+    "githubUrl": "https://github.com/yashsinghal1234/medisage",
+    "liveUrl": "",
+    "visible": true
+  },
+  {
+    "id": "geosentinel",
+    "title": "GeoSentinel",
+    "type": "IoT + Web app",
+    "date": "2026",
+    "subtitle": "Real-Time Mine Subsidence & Geological Early Warning System",
+    "description": "An end-to-end geotechnical monitoring and early-warning platform built for the Ministry of Coal & DGMS, combining autonomous LoRa surface-mesh sensor nodes, a Knothe Time-Dependent physics engine, and role-based GIS dashboards for operators and village communities.",
+    "bullets": [
+      "Designed a fail-safe edge gateway with 100% offline operation, 21-day solar autonomy, 110 dB acoustic sirens, and direct GSM SMS alerts without internet dependency.",
+      "Implemented the CIMFR Knothe Gaussian Subsidence model with a dynamic monsoon piezometric factor (Ψ) providing up to 4.2-hour earlier warning before visual ground rupture.",
+      "Delivered multilingual (English, Hindi, Bengali, Odia, Santhali) public safety dashboards with crowdsourced crack reports and real-time WebSocket telemetry."
+    ],
+    "tags": ["React 19", "TypeScript", "Vite", "Tailwind CSS", "Node.js", "Express", "MongoDB", "WebSockets", "Canvas 2D/WebGL"],
+    "accent": "amber",
+    "githubUrl": "https://github.com/yashsinghal1234/Geosentinel",
+    "liveUrl": "",
+    "visible": true
+  },
+  {
+    "id": "aptix",
+    "title": "Aptix",
+    "type": "Web app",
+    "date": "2026",
+    "subtitle": "High-Concurrency Secure Examination & Assessment Platform",
+    "description": "A serverless-native digital assessment platform engineered for absolute fairness and zero data loss, supporting 500–1000+ concurrent students with in-memory caching, debounced progressive autosave, dual-layer crash recovery, and ironclad anti-cheating proctoring.",
+    "bullets": [
+      "Eliminated thundering-herd database spikes via an in-memory question-set cache layer, enabling 1,000 simultaneous exam starts without performance degradation.",
+      "Built zero-data-loss crash recovery restoring all answers, visit states, and question positions on reconnect, backed by an automated GitHub Actions cron sweeper for abandoned sessions.",
+      "Implemented NTP-synced timer, fullscreen lockdown, tab-switch detection with auto-submit, and payload answer obfuscation to prevent client-side cheating."
+    ],
+    "tags": ["Next.js", "React", "Node.js", "PostgreSQL", "Neon", "Vercel", "JWT", "GitHub Actions"],
+    "accent": "cyan",
+    "githubUrl": "https://github.com/yashsinghal1234/Aptix",
+    "liveUrl": "",
+    "visible": true
+  },
+  {
+    "id": "phishshield-x",
+    "title": "PhishShield-X",
+    "type": "Web app",
+    "date": "2026",
+    "subtitle": "Adaptive Multi-Modal Cyber Threat Detection Framework",
+    "description": "An intelligent cybersecurity framework designed to detect phishing and cyber threats through multi-modal analysis.",
+    "bullets": [
+      "Built a robust threat detection engine using adaptive models.",
+      "Integrated fast API endpoints for real-time analysis.",
+      "Implemented deep learning layers to improve accuracy."
+    ],
+    "tags": ["React", "FastAPI", "Python"],
+    "accent": "pink",
+    "githubUrl": "",
+    "liveUrl": "",
+    "visible": true
+  },
+  {
+    "id": "sanrachna",
+    "title": "Sanrachna",
+    "type": "Web app",
+    "date": "08 2026",
+    "subtitle": "AI-enabled construction management ecosystem for planning, tracking, and execution",
+    "description": "A modern full-stack platform built to bridge communication and operational gaps across construction sites with AI-assisted planning and predictive analytics.",
+    "bullets": [
+      "Streamline planning, workforce coordination, and cost estimation.",
+      "Track issues in real-time and manage safety monitoring.",
+      "Provide AI-driven project assistance and predictive analytics."
+    ],
+    "tags": ["React", "Node.js", "TypeScript", "FastAPI", "MongoDB"],
+    "accent": "violet",
+    "githubUrl": "",
+    "liveUrl": "https://sanrachna-final.vercel.app",
+    "visible": true,
+    "media": {
+      "type": "image",
+      "link": "https://sanrachna-final.vercel.app"
+    }
+  },
+  {
+    "id": "kts-site",
+    "title": "KTS Official Site",
+    "type": "Web app",
+    "date": "2026",
+    "subtitle": "Official website built with Next.js and TypeScript",
+    "description": "A modern, responsive official website leveraging Next.js for server-side rendering and performance.",
+    "bullets": [
+      "Built a scalable architecture using Next.js app router.",
+      "Ensured type safety and robust code with TypeScript.",
+      "Designed responsive interfaces and optimized assets."
+    ],
+    "tags": ["Next.js", "React", "TypeScript"],
+    "accent": "violet",
+    "githubUrl": "",
+    "liveUrl": "",
+    "visible": true
+  },
+  {
+    "id": "coupon-care",
+    "title": "CouponCare",
+    "type": "Web app",
+    "date": "04 2026",
+    "subtitle": "A full-stack platform for donating and requesting discount coupons with approvals and a modern dark UI",
+    "description": "CouponCare connects donors and recipients through a simple coupon sharing workflow with approval-based requests and secure access control.",
+    "bullets": [
+      "Enable donors to list coupons and approve recipient requests.",
+      "Guide recipients through requesting discounts with a clean flow.",
+      "Secure the app with JWT-based authentication and role-ready endpoints."
+    ],
+    "tags": ["React", "Vite", "Tailwind CSS", "Node.js", "Express", "MongoDB"],
+    "accent": "magenta",
+    "githubUrl": "",
+    "liveUrl": "https://couponcare-vaen.vercel.app",
+    "visible": true,
+    "media": {
+      "type": "video",
+      "label": "CouponCare demo",
+      "link": "https://couponcare-vaen.vercel.app"
+    }
+  },
+  {
+    "id": "kaya-forgery-detection",
+    "title": "Kaya Forgery Detection",
+    "type": "Web app",
+    "date": "2026",
+    "subtitle": "AI-powered forgery detection system for images, PDFs, and source code",
+    "description": "Kaya analyzes digital files to identify tampering or fraud, offering forensic checks, confidence-based results, and professional reports.",
+    "bullets": [
+      "Developed an AI engine to analyze images, PDFs, and code for tampering.",
+      "Created a streamlined workflow for file uploads and automated reporting.",
+      "Delivered confidence-based scoring and forensic analysis."
+    ],
+    "tags": ["Python"],
+    "accent": "magenta",
+    "githubUrl": "",
+    "liveUrl": "https://kaya-forgery-detection.onrender.com",
+    "visible": true,
+    "media": {
+      "type": "image",
+      "link": "https://kaya-forgery-detection.onrender.com"
+    }
+  }
+]
